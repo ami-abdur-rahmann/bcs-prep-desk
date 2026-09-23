@@ -1,0 +1,24 @@
+{
+  "name": "BCS Prep Desk",
+  "short_name": "BCS Prep",
+  "description": "Personal BCS exam preparation tracker — topics, videos, revision schedule, planner and exam analysis.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#F2F4F0",
+  "theme_color": "#0E6A4E",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Today", "url": "./#today", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Revision", "url": "./#revision", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Planner", "url": "./#plan", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

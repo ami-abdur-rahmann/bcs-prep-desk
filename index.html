@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E6A4E">
+<meta name="description" content="Personal BCS exam preparation tracker — topics, videos, revision schedule, planner and exam analysis.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>BCS Prep Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F0; --surface:#FFFFFF; --surface-2:#E9EEE8; --ink:#14201A; --ink-2:#435148; --muted:#6A7970;
+  --line:#D8DFD9; --accent:#0E6A4E; --accent-ink:#FFFFFF; --accent-soft:#DCEDE5;
+  --haldi:#C98A0B; --haldi-soft:#FBEFD3; --haldi-ink:#6B4700;
+  --danger:#B63A26; --danger-soft:#F8E2DD; --ok:#2C7A4B; --ok-soft:#DEF0E4; --warn:#A8690F;
+  --margin:#E0A29B; --shadow:0 12px 32px -12px rgba(20,40,30,.3);
+  --f-display:"Schibsted Grotesk","Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Schibsted Grotesk","Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1310; --surface:#151E19; --surface-2:#1D2822; --ink:#E4EBE6; --ink-2:#B8C4BC; --muted:#8B998F;
+    --line:#29362F; --accent:#48B98C; --accent-ink:#06140E; --accent-soft:#16352A;
+    --haldi:#E9B347; --haldi-soft:#392C0F; --haldi-ink:#F4D38E;
+    --danger:#EE7A64; --danger-soft:#3C1B15; --ok:#5CC987; --ok-soft:#143222; --warn:#E3A546;
+    --margin:#7A3C37; --shadow:0 14px 34px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1310; --surface:#151E19; --surface-2:#1D2822; --ink:#E4EBE6; --ink-2:#B8C4BC; --muted:#8B998F;
+  --line:#29362F; --accent:#48B98C; --accent-ink:#06140E; --accent-soft:#16352A;
+  --haldi:#E9B347; --haldi-soft:#392C0F; --haldi-ink:#F4D38E;
+  --danger:#EE7A64; --danger-soft:#3C1B15; --ok:#5CC987; --ok-soft:#143222; --warn:#E3A546;
+  --margin:#7A3C37; --shadow:0 14px 34px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-display);line-height:1.2;margin:0;text-wrap:balance;font-weight:650;letter-spacing:-.01em}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+kbd{font-family:var(--f-mono);font-size:.75rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface);color:var(--ink-2)}
+
+/* shell */
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100%}
+.side{align-self:start;display:flex;flex-direction:column;gap:3px;position:sticky;top:0;height:100vh;padding:22px 14px 16px;border-right:1px solid var(--line);background:var(--surface);overflow-y:auto}
+.brand{padding:2px 10px 18px 12px;position:relative}
+.brand::before{content:"";position:absolute;left:0;top:2px;bottom:16px;border-left:2px solid var(--margin)}
+.brand b{font-family:var(--f-display);font-size:1.3rem;font-weight:750;display:block;line-height:1.1;letter-spacing:-.02em}
+.brand span{font-size:.8rem;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--ink-2);font-size:.95rem}
+.nav svg{width:18px;height:18px;flex:none}
+.nav:hover{background:var(--surface-2)}
+.nav[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav .count{margin-left:auto;font-family:var(--f-mono);font-size:.7rem;background:var(--danger);color:#fff;border-radius:9px;padding:0 6px}
+.nav kbd{margin-left:auto;opacity:.7}
+.nav .count + kbd{margin-left:6px}
+.side .sep{height:1px;background:var(--line);margin:12px 6px}
+.side .foot{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding:8px 6px 0;font-size:.78rem;color:var(--muted)}
+.side .foot .bk{display:flex;align-items:center;gap:6px}
+.side .foot .bk i{width:7px;height:7px;border-radius:50%;background:var(--muted);flex:none}
+.side .foot .bk.ok i{background:var(--ok)} .side .foot .bk.warn i{background:var(--warn)}
+.main{min-width:0;padding-inline:32px;padding-block:0 56px}
+.wrap{max-width:1180px;margin-inline:auto}
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);margin-inline:-32px;padding:14px 32px;display:flex;align-items:center;gap:12px;border-bottom:1px solid transparent}
+.topbar.scrolled{border-bottom-color:var(--line)}
+.topbar h1{font-size:1.4rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.searchbtn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 8px 5px 11px;color:var(--muted);cursor:pointer;font-size:.88rem;min-width:200px}
+.searchbtn kbd{margin-left:auto}
+@media (max-width:820px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line)}
+  .brand{display:none}.side .sep,.side .foot,.nav kbd{display:none}
+  .nav{width:auto}
+  .main{padding-inline:16px}.topbar{margin-inline:-16px;padding:12px 16px}
+  .searchbtn{min-width:0}.searchbtn span,.searchbtn kbd{display:none}
+}
+
+/* blocks */
+.stack{display:flex;flex-direction:column;gap:16px}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))}
+.grid3{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+.card > h2,.sec-h{font-size:1.02rem;display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.sec-h h2,.sec-h h3{font-size:1.02rem}
+.spacer{flex:1}
+.card h2 small,.sec-h small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:.82rem}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.88rem;white-space:nowrap;line-height:1.4}
+.btn:hover{border-color:var(--ink-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn.sm{padding:3px 9px;font-size:.8rem}
+.btn.danger{color:var(--danger)} .btn.danger[data-armed]{background:var(--danger);color:#fff;border-color:var(--danger)}
+.btn.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,var(--line))}
+.btn:disabled{opacity:.5;cursor:default}
+.icon-btn{border:0;background:none;width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:1.05rem;color:var(--ink-2);display:inline-grid;place-items:center;flex:none}
+.icon-btn:hover{background:var(--surface-2)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:.73rem;padding:1px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap;line-height:1.6}
+.pill.imp{background:var(--haldi-soft);color:var(--haldi-ink);font-weight:600}
+.pill.over{background:var(--danger-soft);color:var(--danger);font-weight:600}
+.pill.due{background:var(--haldi-soft);color:var(--haldi-ink)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.acc{background:var(--accent-soft);color:var(--accent)}
+.pill.sample{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
+.st-todo{background:var(--surface-2);color:var(--muted)} .st-doing{background:var(--haldi-soft);color:var(--haldi-ink)} .st-done{background:var(--ok-soft);color:var(--ok)}
+.meter{display:inline-flex;gap:2px;align-items:flex-end;height:14px;vertical-align:-2px;flex:none}
+.meter i{width:4px;border-radius:1px;background:var(--line)}
+.meter i:nth-child(1){height:6px}.meter i:nth-child(2){height:8px}.meter i:nth-child(3){height:10px}.meter i:nth-child(4){height:12px}.meter i:nth-child(5){height:14px}
+.meter i.on{background:var(--haldi)}
+.bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.empty{padding:14px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-size:.88rem;text-align:center}
+
+.alert{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+.alert .ic{flex:none;min-width:26px;height:26px;padding:0 6px;border-radius:7px;display:grid;place-items:center;font-weight:700;font-family:var(--f-mono);font-size:.85rem}
+.alert > div{flex:1;min-width:0}
+.alert.imp{background:var(--haldi-soft);border-color:color-mix(in srgb,var(--haldi) 35%,transparent)} .alert.imp .ic{background:var(--haldi);color:#fff}
+.alert.rev{background:var(--danger-soft);border-color:color-mix(in srgb,var(--danger) 30%,transparent)} .alert.rev .ic{background:var(--danger);color:#fff}
+.alert.info .ic{background:var(--accent-soft);color:var(--accent)}
+.alert b{font-weight:600}
+.alert p{margin:2px 0 0;font-size:.88rem;color:var(--ink-2)}
+.alert .row{margin-top:8px}
+
+/* hero */
+.hero{display:grid;gap:12px;grid-template-columns:1.3fr 1.5fr 1fr 1fr}
+@media (max-width:1000px){.hero{grid-template-columns:1fr 1fr}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.stat .k{font-size:.78rem;color:var(--muted);display:flex;gap:6px;align-items:center}
+.stat .v{font-family:var(--f-mono);font-size:1.45rem;line-height:1.25;margin-top:2px}
+.stat .v small{font-size:.8rem;color:var(--muted)}
+.stat.count{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);position:relative}
+.stat.count .k{color:inherit;opacity:.85}
+.stat.count .v{font-family:var(--f-display);font-weight:750;font-size:1.75rem;letter-spacing:-.02em}
+.stat.count button{position:absolute;right:10px;top:9px;background:transparent;border:0;color:inherit;opacity:.85;cursor:pointer;font-size:.76rem;text-decoration:underline}
+.goal .bar{height:8px;margin-top:8px}
+.goal .streak{font-family:var(--f-mono);font-size:.78rem;color:var(--haldi-ink);background:var(--haldi-soft);padding:0 7px;border-radius:6px;margin-left:auto}
+
+/* lists */
+.list{display:flex;flex-direction:column}
+.item{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:9px 2px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .mt{flex:1 1 200px;min-width:0}
+.item .t{font-weight:500;overflow-wrap:anywhere}
+.item .s{font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:3px 10px;align-items:center;margin-top:1px}
+.clk{cursor:pointer;border-radius:6px}
+.item.clk:hover,.mt.clk:hover .t{color:var(--accent)}
+.item .time{font-family:var(--f-mono);font-size:.84rem;color:var(--ink-2);width:46px;flex:none}
+.item .acts{display:flex;gap:4px;align-items:center;flex-wrap:nowrap}
+.check{width:21px;height:21px;flex:none;border-radius:6px;border:2px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center;padding:0}
+.check:hover{border-color:var(--ok)}
+.check.on{background:var(--ok);border-color:var(--ok)}
+.check.on::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.done-t{text-decoration:line-through;color:var(--muted)}
+.day-h{font-family:var(--f-display);font-weight:650;font-size:.92rem;padding:14px 2px 4px;display:flex;gap:8px;align-items:center;color:var(--ink-2)}
+.day-h.today{color:var(--accent)}
+.day-h small{font-family:var(--f-body);font-weight:400;color:var(--muted)}
+
+/* subjects */
+.subgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.subcard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:8px}
+.subcard:hover{border-color:var(--accent)}
+.subcard h3{font-size:1rem;flex:1}
+.marks{font-family:var(--f-mono);font-size:.76rem;color:var(--accent);background:var(--accent-soft);padding:1px 7px;border-radius:6px;flex:none}
+.subcard .meta{display:flex;gap:6px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:.82rem;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.back{background:none;border:0;color:var(--accent);cursor:pointer;padding:0;font-size:.9rem}
+
+/* drawer + dialog */
+.scrim{position:fixed;inset:0;background:rgba(10,20,15,.42);z-index:40}
+.drawer{position:fixed;z-index:41;top:0;right:0;bottom:0;width:min(600px,100%);background:var(--bg);box-shadow:var(--shadow);border-left:1px solid var(--line);display:flex;flex-direction:column}
+.drawer header{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 12px;border-bottom:1px solid var(--line);background:var(--surface)}
+.drawer header h2{font-size:1.3rem}
+.drawer .body{overflow-y:auto;padding:16px 18px 32px;display:flex;flex-direction:column;gap:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:6px 13px;cursor:pointer;font-size:.85rem;color:var(--ink-2)}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.dlg-scrim{z-index:50}
+.dialog{position:fixed;z-index:51;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px 16px;pointer-events:none}
+.dlg-card{pointer-events:auto;background:var(--surface);width:100%;max-width:540px;border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;max-height:88vh;border:1px solid var(--line)}
+.dlg-card.wide{max-width:720px}
+.dlg-card header{display:flex;align-items:center;padding:14px 16px 6px}
+.dlg-card header h3{flex:1;font-size:1.12rem}
+.dlg-body{padding:6px 16px 12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.dlg-card footer{display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:10px 16px 14px;border-top:1px solid var(--line)}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld > span{font-size:.82rem;color:var(--ink-2);font-weight:500}
+.fld small{color:var(--muted);font-size:.76rem}
+.fld input,.fld select,.fld textarea,.inp{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 10px;min-width:0}
+.fld textarea{min-height:84px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus,.inp:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.fgrid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.fgrid3{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr}
+.full{grid-column:1/-1}
+.cbx{display:flex;align-items:center;gap:8px;font-size:.88rem}
+.stars{display:flex;gap:6px}
+.stars label{flex:1;position:relative}
+.stars input{position:absolute;opacity:0;pointer-events:none}
+.stars span{display:block;text-align:center;border:1px solid var(--line);border-radius:8px;padding:5px 0;cursor:pointer;font-family:var(--f-mono)}
+.stars input:checked + span{background:var(--haldi);border-color:var(--haldi);color:#fff}
+.stars input:focus-visible + span{outline:2px solid var(--accent)}
+details.more{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+details.more summary{cursor:pointer;font-size:.88rem;font-weight:500}
+.bd{display:grid;grid-template-columns:1fr 64px 64px;gap:6px 8px;align-items:center;margin-top:10px;font-size:.84rem}
+.bd input{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:4px 6px;font-family:var(--f-mono)}
+.bd .h{color:var(--muted);font-size:.75rem}
+.calc{font-family:var(--f-mono);background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:8px 10px;font-size:.9rem}
+
+/* timer */
+.timer{display:inline-flex;align-items:center;gap:8px;background:var(--danger);color:#fff;border-radius:999px;padding:4px 5px 4px 12px;font-size:.84rem}
+.timer.pomo-done{background:var(--ok)}
+.timer .n{font-family:var(--f-mono)}
+.timer .tt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.timer button{background:#fff;color:var(--danger);border:0;border-radius:999px;padding:2px 10px;cursor:pointer;font-weight:600;font-size:.78rem}
+.timer.pomo-done button{color:var(--ok)}
+.timer button.x{background:transparent;color:#fff;padding:2px 6px}
+.pulse{width:8px;height:8px;border-radius:50%;background:#fff;animation:pl 1.4s infinite}
+@keyframes pl{50%{opacity:.25}}
+
+/* charts */
+.hbar{display:grid;grid-template-columns:minmax(100px,36%) 1fr auto;gap:7px 10px;align-items:center;font-size:.84rem}
+.hbar .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2)}
+.hbar .trk{height:10px;background:var(--surface-2);border-radius:3px;position:relative}
+.hbar .trk i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0}
+.hbar .trk i.warm{background:var(--danger)}
+.hbar .val{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2);text-align:right;white-space:nowrap}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart .axl{fill:var(--muted);font-size:11px;font-family:var(--f-mono)}
+.chart .b{fill:var(--accent)} .chart g:hover .b{fill:var(--haldi)}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2}
+.chart .pt{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,13px);grid-auto-columns:13px;justify-content:start;gap:3px;overflow-x:auto;padding-bottom:4px}
+.heat i{width:13px;height:13px;border-radius:3px;background:var(--surface-2)}
+.heat i.l1{background:color-mix(in srgb,var(--accent) 25%,var(--surface-2))}
+.heat i.l2{background:color-mix(in srgb,var(--accent) 50%,var(--surface-2))}
+.heat i.l3{background:color-mix(in srgb,var(--accent) 75%,var(--surface-2))}
+.heat i.l4{background:var(--accent)}
+.heat i.fut{background:transparent}
+.heat i.td{outline:1.5px solid var(--ink-2);outline-offset:0}
+.legend{display:flex;gap:4px;align-items:center;font-size:.74rem;color:var(--muted);margin-top:6px}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block}
+.cmp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:700px){.cmp{grid-template-columns:1fr 1fr}}
+.cmp div{background:var(--surface-2);border-radius:8px;padding:9px 11px}
+.cmp .k{font-size:.76rem;color:var(--muted)}
+.cmp .v{font-family:var(--f-mono);font-size:1.15rem}
+.cmp .d{font-family:var(--f-mono);font-size:.74rem}
+.up{color:var(--ok)} .down{color:var(--danger)}
+.tablewrap{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:.86rem}
+table.t th,table.t td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t th{font-weight:500;color:var(--muted);font-size:.78rem}
+table.t td.n,table.t th.n{font-family:var(--f-mono);text-align:right}
+
+/* quiz + search */
+.qcard{border:1px solid var(--line);border-radius:12px;padding:22px 18px;min-height:150px;display:flex;flex-direction:column;gap:12px;justify-content:center;background:var(--bg)}
+.qcard .q{font-size:1.15rem;font-weight:600;font-family:var(--f-display)}
+.qcard .a{font-size:1rem;color:var(--accent);border-top:1px dashed var(--line);padding-top:12px;white-space:pre-wrap}
+.prog{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.sres{display:flex;flex-direction:column;max-height:50vh;overflow-y:auto}
+.sres button{all:unset;cursor:pointer;padding:8px 10px;border-radius:7px;display:flex;flex-direction:column}
+.sres button:hover,.sres button.sel{background:var(--surface-2)}
+.sres .ty{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.shortcuts{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:.9rem;align-items:center}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;z-index:60;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:.9rem;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.note{white-space:pre-wrap;font-size:.88rem;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:8px 10px;margin:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Menu">
+    <div class="brand"><b>BCS Prep Desk</b><span>Personal study tracker</span></div>
+    <div id="sideNav" style="display:contents"></div>
+    <button class="nav" id="installBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Install app</span></button>
+    <div class="foot" id="sideFoot"></div>
+  </aside>
+  <main class="main">
+    <div class="wrap">
+      <div class="topbar" id="topbar">
+        <h1 id="viewTitle">Today</h1>
+        <span id="timerSlot"></span>
+        <button class="searchbtn" data-act="search" aria-label="Search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>/</kbd></button>
+      </div>
+      <div id="view" class="stack"></div>
+    </div>
+  </main>
+</div>
+<div id="detailLayer" hidden></div>
+<div id="dialogLayer" hidden></div>
+<div id="toast" class="toast" hidden role="status"></div>
+<script>
+(() => {
+'use strict';
+/* ================= constants ================= */
+const KEY = 'bcs-prep-desk-v1';
+const INT = [1,3,7,15,30,60,90];
+const MAPS = ['subjects','topics','videos','sessions','plans','exams','mistakes','cards'];
+const KIND = {mistake:'Got it wrong', weak:'Weak area', focus:'Needs focus'};
+const STATUS = {todo:'Not started', doing:'In progress', done:'Completed'};
+const SKIND = {reading:'Reading', video:'Video', practice:'Practice / MCQ', revision:'Revision'};
+const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const VIEWS = [['today','Today'],['subjects','Subjects'],['revision','Revision'],['plan','Planner'],['analysis','Analysis']];
+const ICON = {
+  today:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6" fill="currentColor"/></svg>',
+  subjects:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10M9 8h5"/></svg>',
+  revision:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>',
+  plan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>',
+  analysis:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  search:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  cards:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>'
+};
+
+/* ================= utils ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const ymd = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const today = () => ymd(new Date());
+const parse = s => { const [y,m,d] = String(s).split('-').map(Number); return new Date(y, (m||1)-1, d||1); };
+const addDays = (s,n) => { const d = parse(s); d.setDate(d.getDate()+n); return ymd(d); };
+const diff = (a,b) => Math.round((parse(b) - parse(a)) / 86400000);
+const fmtD = s => { if (!s) return ''; const d = parse(s); return `${WD[d.getDay()]}, ${d.getDate()} ${d.toLocaleString('en-GB',{month:'short'})}`; };
+const rel = s => { const n = diff(today(), s); if (n===0) return 'today'; if (n===1) return 'tomorrow'; if (n===-1) return 'yesterday'; return n<0 ? `${-n} days ago` : `in ${n} days`; };
+const mins = m => { m = Math.round(m||0); if (m < 60) return `${m}m`; const h = Math.floor(m/60), r = m%60; return r ? `${h}h ${r}m` : `${h}h`; };
+const hm = d => `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+const round1 = n => Math.round(n*10)/10;
+
+/* ================= state ================= */
+let S = null;
+let fileHandle = null, fileState = 'none', fileTimer = 0;
+function blank(){ const s = {v:1, settings:{dailyGoalMin:240, negMark:0.5, theme:'auto', notify:false, examName:'', examDate:''}, timer:null}; MAPS.forEach(m => s[m] = {}); return s; }
+function seed(){
+  const s = blank(); const td = today(); const D = n => addDays(td, n);
+  [['bangla','Bangla Language & Literature',30],['english','English Language & Literature',30],['bdaffairs','Bangladesh Affairs',25],['intl','International Affairs',25],['geo','Geography, Environment & Disaster Mgmt.',10],['science','General Science',15],['ict','Computer & ICT',15],['math','Mathematical Reasoning',20],['mental','Mental Ability',15],['ethics','Ethics, Values & Good Governance',15]]
+    .forEach(([id,name,marks],i) => s.subjects[id] = {id,name,marks,order:i+1});
+  const T = o => ({status:'todo',revStage:0,nextRev:null,revLog:[],note:'',pyq:'',qCount:null,sample:true,createdAt:Date.now(),...o});
+  s.topics.s_t1 = T({id:'s_t1',subjectId:'bdaffairs',name:'Liberation War — sectors & commanders',importance:5,pyq:'Sample: asked almost every year',qCount:12,status:'done',studiedAt:D(-4),revStage:1,nextRev:td,revLog:[{d:D(-3),r:'good'}],note:'Sample note: memorise sector number ↔ commander as pairs.'});
+  s.topics.s_t2 = T({id:'s_t2',subjectId:'bangla',name:'সমাস (Compound words)',importance:4,pyq:'Sample',status:'doing'});
+  s.topics.s_t3 = T({id:'s_t3',subjectId:'math',name:'Percentage & profit-loss',importance:4,pyq:'Sample'});
+  s.topics.s_t4 = T({id:'s_t4',subjectId:'ict',name:'Network topology',importance:3});
+  s.videos.s_v1 = {id:'s_v1',title:'Samas — full class (sample)',url:'',teacher:'',lengthMin:60,subjectId:'bangla',topicId:'s_t2',done:false,sample:true};
+  const at = (d,h) => { const x = parse(d); x.setHours(h,0,0,0); return x.getTime(); };
+  s.sessions.s_s1 = {id:'s_s1',d:D(-1),at:at(D(-1),21),min:25,kind:'video',subjectId:'bangla',topicId:'s_t2',videoId:'s_v1',sample:true};
+  s.sessions.s_s2 = {id:'s_s2',d:D(-3),at:at(D(-3),19),min:50,kind:'revision',subjectId:'bdaffairs',topicId:'s_t1',sample:true};
+  s.sessions.s_s3 = {id:'s_s3',d:D(-2),at:at(D(-2),10),min:40,kind:'practice',subjectId:'math',topicId:'s_t3',sample:true};
+  s.plans.s_p1 = {id:'s_p1',date:td,time:'20:00',subjectId:'bangla',topicId:'s_t2',title:'',source:'Grammar book — Samas chapter, then the rest of the video',targetMin:60,done:false,sample:true};
+  s.plans.s_p2 = {id:'s_p2',date:D(1),time:'09:00',subjectId:'math',topicId:'s_t3',title:'',source:"Previous years' questions",targetMin:90,done:false,sample:true};
+  s.plans.s_p3 = {id:'s_p3',date:D(-2),time:'18:00',subjectId:'ict',topicId:'s_t4',title:'',source:'ICT book, chapter 3',targetMin:45,done:false,sample:true};
+  s.exams.s_e1 = {id:'s_e1',name:'Model Test 1 (sample)',date:D(-5),total:200,correct:142,wrong:28,neg:0.5,score:128,bySubject:{bangla:{c:22,w:4},english:{c:19,w:6},bdaffairs:{c:18,w:5},math:{c:11,w:6}},note:'',sample:true};
+  s.mistakes.s_m1 = {id:'s_m1',kind:'weak',note:'Percentage problems took too long',subjectId:'math',topicId:'s_t3',examId:'s_e1',resolved:false,date:D(-5),sample:true};
+  s.mistakes.s_m2 = {id:'s_m2',kind:'mistake',note:'Mixed up the sector commanders',subjectId:'bdaffairs',topicId:'s_t1',examId:'s_e1',resolved:false,date:D(-5),sample:true};
+  s.cards.s_c1 = {id:'s_c1',topicId:'s_t1',subjectId:'bdaffairs',q:'Into how many sectors was Bangladesh divided during the 1971 Liberation War?',a:'11 sectors',right:0,wrong:0,sample:true};
+  s.cards.s_c2 = {id:'s_c2',topicId:'s_t1',subjectId:'bdaffairs',q:'On which date did the Liberation War formally begin?',a:'26 March 1971',right:0,wrong:0,sample:true};
+  return s;
+}
+function load(){
+  try { const o = JSON.parse(localStorage.getItem(KEY) || 'null'); if (o && o.subjects) { const b = blank(); MAPS.forEach(m => b[m] = o[m] || {}); b.settings = {...b.settings, ...(o.settings||{})}; b.timer = o.timer || null; return b; } } catch(e) {}
+  return null;
+}
+let storageOk = true;
+function persist(){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); storageOk = true; } catch(e) { storageOk = false; toast('Could not save to the browser — export a backup now'); }
+  queueFileSave();
+}
+function commit(msg){ persist(); render(); if (msg) toast(msg); }
+S = load();
+const firstRun = !S;
+if (!S) { S = seed(); persist(); }
+
+/* ================= backup file (File System Access) ================= */
+const idb = (op, key, val) => new Promise((res) => {
+  try {
+    const r = indexedDB.open('bcs-prep-desk', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => { const tx = r.result.transaction('kv', op==='get'?'readonly':'readwrite'); const st = tx.objectStore('kv'); const q = op==='get' ? st.get(key) : op==='del' ? st.delete(key) : st.put(val, key); q.onsuccess = () => res(q.result); q.onerror = () => res(null); };
+    r.onerror = () => res(null);
+  } catch(e) { res(null); }
+});
+async function initFile(){
+  const h = await idb('get','fh'); if (!h) return;
+  fileHandle = h;
+  try { const p = await h.queryPermission({mode:'readwrite'}); fileState = p === 'granted' ? 'ok' : 'reconnect'; } catch(e) { fileState = 'reconnect'; }
+  renderChrome();
+}
+function queueFileSave(){ if (fileState !== 'ok') return; clearTimeout(fileTimer); fileTimer = setTimeout(writeFile, 1200); }
+async function writeFile(){
+  if (!fileHandle) return;
+  try { const w = await fileHandle.createWritable(); await w.write(JSON.stringify(S, null, 1)); await w.close(); S.settings.lastBackup = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} fileState = 'ok'; }
+  catch(e) { console.error(e); fileState = 'reconnect'; }
+  renderChrome();
+}
+async function linkFile(){
+  if (!window.showSaveFilePicker) { toast('This browser cannot auto-save to a file — use Chrome or Edge, or Export instead'); return; }
+  try {
+    fileHandle = await window.showSaveFilePicker({suggestedName:'bcs-prep-backup.json', types:[{description:'JSON backup', accept:{'application/json':['.json']}}]});
+    await idb('put','fh',fileHandle); fileState = 'ok'; await writeFile(); toast('Auto-backup on — every change is saved to that file');
+  } catch(e) { if (e.name !== 'AbortError') toast('Could not link the file'); }
+}
+async function reconnectFile(){
+  if (!fileHandle) return;
+  try { const p = await fileHandle.requestPermission({mode:'readwrite'}); fileState = p === 'granted' ? 'ok' : 'reconnect'; if (fileState === 'ok') { await writeFile(); toast('Backup file reconnected'); } } catch(e) { fileState = 'reconnect'; }
+  renderChrome();
+}
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(S, null, 1)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `bcs-prep-backup-${today()}.json`;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  S.settings.lastBackup = Date.now(); commit('Backup downloaded');
+}
+function importJSON(file){
+  const r = new FileReader();
+  r.onload = () => {
+    try { const o = JSON.parse(r.result); if (!o || !o.subjects || !o.topics) throw 0; const b = blank(); MAPS.forEach(m => b[m] = o[m] || {}); b.settings = {...b.settings, ...(o.settings||{})}; b.timer = null; S = b; closeDialog(); closeDetail(); applyTheme(); commit('Backup restored'); }
+    catch(e) { toast('That file is not a valid backup'); }
+  };
+  r.readAsText(file);
+}
+
+/* ================= selectors ================= */
+const arr = m => Object.values(S[m]);
+const sortBy = (a, f, dir=1) => a.slice().sort((x,y) => { const p=f(x), q=f(y); return (p>q?1:p<q?-1:0)*dir; });
+const subjects = () => sortBy(arr('subjects'), s => s.order ?? 99);
+const topicsOf = sid => arr('topics').filter(t => t.subjectId === sid);
+const subName = id => S.subjects[id]?.name || '—';
+const topicName = id => S.topics[id]?.name || '';
+const isImp = t => (t?.importance||0) >= 4;
+const sampleTag = o => o?.sample ? ' <span class="pill sample">sample</span>' : '';
+const meter = n => `<span class="meter" title="Importance ${n||0}/5">${[1,2,3,4,5].map(i=>`<i class="${i<=(n||0)?'on':''}"></i>`).join('')}</span>`;
+const revState = t => { if (!t.nextRev) return null; const n = diff(today(), t.nextRev); return n < 0 ? 'over' : n === 0 ? 'due' : 'later'; };
+const dueTopics = () => sortBy(arr('topics').filter(t => { const r = revState(t); return r==='over'||r==='due'; }), t => t.nextRev);
+const watched = v => arr('sessions').filter(s => s.videoId === v.id).reduce((a,s) => a + (s.min||0), 0);
+const minsOn = d => arr('sessions').filter(s => s.d === d).reduce((a,s) => a + (s.min||0), 0);
+const minsBetween = (a,b) => arr('sessions').filter(s => s.d >= a && s.d <= b).reduce((x,s) => x + (s.min||0), 0);
+function dayTotals(){ const m = {}; arr('sessions').forEach(s => m[s.d] = (m[s.d]||0) + (s.min||0)); return m; }
+function streak(){
+  const goal = +S.settings.dailyGoalMin || 1; const tot = dayTotals(); let d = today(), n = 0;
+  if ((tot[d]||0) < goal) d = addDays(d, -1);
+  while ((tot[d]||0) >= goal) { n++; d = addDays(d, -1); }
+  return n;
+}
+const missedPlans = () => arr('plans').filter(p => !p.done && p.date < today() && p.date >= addDays(today(), -30));
+
+/* ================= UI state ================= */
+const ui = {view:'today', subjectId:null, filter:'all', detail:null, showPast:false};
+try { const v = localStorage.getItem(KEY+':view'); if (VIEWS.some(x=>x[0]===v)) ui.view = v; } catch(e){}
+const hv = (location.hash||'').slice(1); if (VIEWS.some(x=>x[0]===hv)) ui.view = hv;
+
+/* ================= chrome ================= */
+function applyTheme(){ const t = S.settings.theme; if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); else document.documentElement.removeAttribute('data-theme'); }
+function renderChrome(){
+  const dc = dueTopics().length;
+  $('#sideNav').innerHTML = VIEWS.map(([k,l],i) => `<button class="nav" data-act="go" data-v="${k}" ${ui.view===k?'aria-current="page"':''}>${ICON[k]}<span>${l}</span>${k==='revision'&&dc?`<span class="count">${dc}</span>`:''}<kbd>${i+1}</kbd></button>`).join('')
+    + `<div class="sep"></div><button class="nav" data-act="startDlg">${ICON.play}<span>Start studying</span><kbd>S</kbd></button><button class="nav" data-act="practice">${ICON.cards}<span>Flashcards</span><kbd>F</kbd></button><button class="nav" data-act="settings">${ICON.gear}<span>Settings & backup</span></button>`;
+  const lb = S.settings.lastBackup; const age = lb ? Math.floor((Date.now()-lb)/86400000) : null;
+  const bk = fileState === 'ok' ? `<span class="bk ok"><i></i>Auto-backup on</span>` : fileState === 'reconnect' ? `<button class="btn sm" data-act="reconnectFile">Reconnect backup file</button>` : `<span class="bk ${age===null||age>6?'warn':'ok'}"><i></i>${age===null?'No backup yet':age===0?'Backed up today':`Last backup ${age}d ago`}</span>`;
+  $('#sideFoot').innerHTML = `${bk}<span>${S.settings.examName?`Target: ${esc(S.settings.examName)}`:'Saved in this browser'}</span><span><kbd>?</kbd> shortcuts</span>`;
+  document.title = (dc ? `(${dc}) ` : '') + 'BCS Prep Desk';
+  renderTimer();
+}
+
+/* ================= timer / pomodoro ================= */
+let tick = 0, audio = null, pomoAlerted = false;
+function beep(){ try { audio = audio || new (window.AudioContext||window.webkitAudioContext)(); [0,0.35,0.7].forEach(t => { const o = audio.createOscillator(), g = audio.createGain(); o.frequency.value = 880; o.connect(g); g.connect(audio.destination); g.gain.setValueAtTime(0.0001, audio.currentTime+t); g.gain.exponentialRampToValueAtTime(0.25, audio.currentTime+t+0.02); g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime+t+0.28); o.start(audio.currentTime+t); o.stop(audio.currentTime+t+0.3); }); } catch(e){} }
+function timerLabel(t){ const tp = S.topics[t.topicId], v = S.videos[t.videoId]; return `${SKIND[t.kind]||'Study'} · ${v ? v.title : tp ? tp.name : subName(t.subjectId)}`; }
+function renderTimer(){
+  const t = S.timer, slot = $('#timerSlot');
+  if (!t) { slot.innerHTML = ''; clearInterval(tick); tick = 0; return; }
+  slot.innerHTML = `<span class="timer" id="timerChip"><span class="pulse"></span><span class="tt">${esc(timerLabel(t))}</span><span class="n" id="tnum">00:00</span><button data-act="stopTimer" title="Stop and log this session">Stop & log</button><button class="x" data-act="discardTimer" title="Discard without logging" aria-label="Discard">×</button></span>`;
+  const upd = () => {
+    const e = Math.max(0, Date.now() - t.startedAt); let show = e;
+    const chip = $('#timerChip'); if (!chip) return;
+    if (t.pomo) { const left = t.pomo*60000 - e; show = Math.abs(left); if (left <= 0) { chip.classList.add('pomo-done'); if (!pomoAlerted) { pomoAlerted = true; beep(); notify('Pomodoro finished', `${t.pomo} minutes done — take a short break and log it.`); } } }
+    const m = Math.floor(show/60000), s = Math.floor(show/1000)%60, h = Math.floor(m/60);
+    $('#tnum').textContent = (t.pomo && t.pomo*60000 - e <= 0 ? '+' : '') + (h ? `${h}:${String(m%60).padStart(2,'0')}` : String(m).padStart(2,'0')) + ':' + String(s).padStart(2,'0');
+  };
+  upd(); clearInterval(tick); tick = setInterval(upd, 1000);
+}
+function startTimer(o){
+  if (S.timer) { toast('A timer is already running — stop it first'); return; }
+  pomoAlerted = false; try { audio = audio || new (window.AudioContext||window.webkitAudioContext)(); } catch(e){}
+  S.timer = {startedAt:Date.now(), kind:o.kind||'reading', subjectId:o.subjectId||null, topicId:o.topicId||null, videoId:o.videoId||null, pomo:o.pomo?+o.pomo:null};
+  if (o.topicId && S.topics[o.topicId] && (S.topics[o.topicId].status||'todo') === 'todo') S.topics[o.topicId].status = 'doing';
+  commit(o.pomo ? `Pomodoro started — ${o.pomo} minutes` : 'Timer started');
+}
+function stopTimer(){
+  const t = S.timer; if (!t) return;
+  const min = Math.max(1, Math.round((Date.now() - t.startedAt)/60000));
+  addSession({d: ymd(new Date(t.startedAt)), at: t.startedAt, min, kind:t.kind, subjectId:t.subjectId, topicId:t.topicId, videoId:t.videoId});
+  S.timer = null; commit(`Logged ${mins(min)}`);
+}
+function addSession(o){
+  const id = uid(); S.sessions[id] = {id, ...o};
+  if (o.videoId && S.videos[o.videoId]) { const v = S.videos[o.videoId]; if (v.lengthMin && watched(v) >= v.lengthMin) v.done = true; }
+}
+
+/* ================= notifications ================= */
+function notify(title, body){
+  if (S.settings.notify && 'Notification' in window && Notification.permission === 'granted') { try { new Notification(title, {body}); } catch(e){} }
+  toast(body ? `${title} — ${body}` : title);
+}
+const notified = new Set();
+function checkReminders(){
+  const td = today(), now = hm(new Date());
+  arr('plans').forEach(p => {
+    if (p.date !== td || p.done || !p.time) return;
+    const k = 'p:'+p.id+':'+p.date+p.time; if (notified.has(k)) return;
+    if (p.time <= now && now <= addMinutes(p.time, 10)) { notified.add(k); const t = S.topics[p.topicId]; notify('Time to study', `${t ? t.name : (p.title||subName(p.subjectId))}${p.source?` · from ${p.source}`:''}${isImp(t)?' · HIGH-PRIORITY topic':''}`); }
+  });
+  if (S.settings.lastRevNotify !== td) { const n = dueTopics().length; if (n) { S.settings.lastRevNotify = td; persist(); notify('Revision due', `${n} topic${n>1?'s':''} need revision today`); } }
+}
+function addMinutes(t, n){ const [h,m] = t.split(':').map(Number); const x = h*60+m+n; return `${String(Math.floor(x/60)%24).padStart(2,'0')}:${String(x%60).padStart(2,'0')}`; }
+
+/* ================= render ================= */
+function render(){
+  renderChrome();
+  const title = ui.view==='subjects' && ui.subjectId && S.subjects[ui.subjectId] ? S.subjects[ui.subjectId].name : VIEWS.find(v=>v[0]===ui.view)[1];
+  $('#viewTitle').textContent = title;
+  try { $('#view').innerHTML = ({today:vToday, subjects:vSubjects, revision:vRevision, plan:vPlan, analysis:vAnalysis})[ui.view](); }
+  catch(err) { console.error(err); $('#view').innerHTML = `<div class="alert rev"><span class="ic">!</span><div><b>Something went wrong showing this page</b><p>${esc(err.message)} — your data is safe. Try another view, or export a backup from Settings.</p></div></div>`; }
+  if (ui.detail) renderDetail();
+}
+
+/* ----- shared rows ----- */
+function planRow(p, showDate){
+  const t = S.topics[p.topicId]; const overdue = !p.done && p.date < today();
+  return `<div class="item">
+    <button class="check ${p.done?'on':''}" data-act="togglePlan" data-id="${p.id}" aria-label="Mark done"></button>
+    <span class="time">${esc(p.time||'—')}</span>
+    <div class="mt ${t?'clk':''}" ${t?`data-act="openTopic" data-id="${t.id}"`:''}>
+      <div class="t ${p.done?'done-t':''}">${esc(t ? t.name : (p.title||'Study'))}${isImp(t)?` <span class="pill imp">High priority ${meter(t.importance)}</span>`:''}${sampleTag(p)}</div>
+      <div class="s"><span>${esc(subName(p.subjectId))}</span>${p.source?`<span>From: ${esc(p.source)}</span>`:''}${p.targetMin?`<span>${mins(p.targetMin)}</span>`:''}${showDate?`<span class="${overdue?'down':''}">${fmtD(p.date)}</span>`:''}</div>
+    </div>
+    <div class="acts">${overdue?`<button class="btn sm" data-act="moveToday" data-id="${p.id}">Move to today</button>`:''}${!p.done && p.date===today()?`<button class="icon-btn" data-act="startPlan" data-id="${p.id}" title="Start timer for this" aria-label="Start timer">▶</button>`:''}<button class="icon-btn" data-act="editPlan" data-id="${p.id}" aria-label="Edit">✎</button></div>
+  </div>`;
+}
+function revRow(t, full){
+  const r = revState(t), n = diff(today(), t.nextRev); const cc = arr('cards').filter(c=>c.topicId===t.id).length;
+  return `<div class="item">
+    <div class="mt clk" data-act="openTopic" data-id="${t.id}"><div class="t">${esc(t.name)} ${meter(t.importance)}${sampleTag(t)}</div>
+      <div class="s"><span>${esc(subName(t.subjectId))}</span><span class="pill ${r==='over'?'over':r==='due'?'due':''}">${n<0?`${-n}d overdue`:n===0?'today':fmtD(t.nextRev)}</span><span>Revision #${(t.revLog||[]).length+1}</span>${full&&(t.revLog||[]).length?`<span>last ${rel(t.revLog.slice(-1)[0].d)}</span>`:''}${cc?`<span>${cc} cards</span>`:''}</div></div>
+    ${n<=0?`<div class="acts">${cc?`<button class="btn sm" data-act="quizTopic" data-id="${t.id}">Quiz</button>`:''}<button class="btn sm ok" data-act="revise" data-id="${t.id}" data-g="good">Done</button>${full?`<button class="btn sm" data-act="revise" data-id="${t.id}" data-g="hard">Hard</button><button class="btn sm ghost" data-act="snooze" data-id="${t.id}" title="Push by one day">+1d</button>`:''}</div>`:''}
+  </div>`;
+}
+function mistakeRow(m){
+  const t = S.topics[m.topicId], ex = S.exams[m.examId];
+  return `<div class="item">
+    <button class="check ${m.resolved?'on':''}" data-act="toggleMistake" data-id="${m.id}" title="Mark as fixed" aria-label="Mark as fixed"></button>
+    <div class="mt ${t?'clk':''}" ${t?`data-act="openTopic" data-id="${t.id}"`:''}>
+      <div class="t ${m.resolved?'done-t':''}">${esc(m.note)}${sampleTag(m)}</div>
+      <div class="s"><span class="pill ${m.kind==='mistake'?'over':m.kind==='weak'?'due':'acc'}">${KIND[m.kind]||'Mistake'}</span><span>${esc(subName(m.subjectId))}${t?` · ${esc(t.name)}`:''}</span>${ex?`<span>${esc(ex.name)}</span>`:''}</div>
+    </div>
+    <button class="icon-btn" data-act="editMistake" data-id="${m.id}" aria-label="Edit">✎</button>
+  </div>`;
+}
+function sessionRow(s){
+  const t = S.topics[s.topicId], v = S.videos[s.videoId];
+  return `<div class="item"><span class="time">${s.at?hm(new Date(s.at)):'—'}</span><div class="mt"><div class="t">${esc(v ? v.title : t ? t.name : subName(s.subjectId))}${sampleTag(s)}</div><div class="s"><span class="pill">${SKIND[s.kind]||'Study'}</span><span>${esc(subName(s.subjectId))}</span>${s.note?`<span>${esc(s.note)}</span>`:''}</div></div><span class="mono small">${mins(s.min)}</span><button class="icon-btn" data-act="editSession" data-id="${s.id}" aria-label="Edit">✎</button></div>`;
+}
+function videoRow(v){
+  const w = watched(v), p = v.lengthMin ? Math.min(100, pct(w, v.lengthMin)) : (v.done?100:0);
+  const last = sortBy(arr('sessions').filter(s=>s.videoId===v.id), s=>s.at||0).slice(-1)[0];
+  return `<div class="item">
+    <div class="mt">
+      <div class="t">${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.title)} ↗</a>`:esc(v.title)}${v.done?' <span class="pill ok">Watched</span>':''}${sampleTag(v)}</div>
+      <div class="s">${v.teacher?`<span>${esc(v.teacher)}</span>`:''}${v.topicId?`<span>${esc(topicName(v.topicId))}</span>`:''}<span>${mins(w)}${v.lengthMin?` of ${mins(v.lengthMin)}`:''}</span>${last?`<span>last watched ${rel(last.d)}${last.at?` at ${hm(new Date(last.at))}`:''}</span>`:''}</div>
+      <div class="bar" style="margin-top:6px;max-width:280px"><i style="width:${p}%"></i></div>
+    </div>
+    <div class="acts">${S.timer?'':`<button class="btn sm" data-act="startVideo" data-id="${v.id}">▶ Watch</button>`}<button class="btn sm ghost" data-act="logVideo" data-id="${v.id}">Log time</button><button class="icon-btn" data-act="editVideo" data-id="${v.id}" aria-label="Edit">✎</button></div>
+  </div>`;
+}
+
+/* ----- TODAY ----- */
+function vToday(){
+  const td = today(), st = S.settings;
+  const plansToday = sortBy(arr('plans').filter(p=>p.date===td), p=>p.time||'99');
+  const due = dueTopics(), over = due.filter(t=>revState(t)==='over').length;
+  const upcoming = sortBy(arr('plans').filter(p=>p.date>td && p.date<=addDays(td,7)), p=>p.date+(p.time||''));
+  const impToday = plansToday.map(p=>S.topics[p.topicId]).filter(t=>isImp(t) && t.status!=='done');
+  const focus = sortBy(arr('mistakes').filter(m=>!m.resolved), m=>m.date||'', -1).slice(0,6);
+  const missed = missedPlans();
+  const hasSample = MAPS.some(m=>arr(m).some(o=>o.sample));
+  const left = st.examDate ? diff(td, st.examDate) : null;
+  const tMin = minsOn(td), goal = +st.dailyGoalMin || 240, stk = streak();
+  const tAll = arr('topics'), tDone = tAll.filter(t=>t.status==='done').length;
+  const sess = sortBy(arr('sessions').filter(s=>s.d===td), s=>s.at||0);
+  const lb = st.lastBackup, bAge = lb ? Math.floor((Date.now()-lb)/86400000) : null;
+  let al = '';
+  if (hasSample) al += `<div class="alert info"><span class="ic">i</span><div><b>You're looking at sample data</b><p>Items tagged “sample” are here to show how things work. Clear them when you start adding your own.</p><div class="row"><button class="btn sm danger" data-act="clearSamples">Clear sample data</button></div></div></div>`;
+  if (due.length) al += `<div class="alert rev"><span class="ic">${due.length}</span><div><b>Revision due</b><p>${over?`${over} overdue, `:''}${due.length-over} due today. Revise now so older topics don't slip.</p><div class="row"><button class="btn sm" data-act="go" data-v="revision">Open revision</button></div></div></div>`;
+  if (impToday.length) al += `<div class="alert imp"><span class="ic">!</span><div><b>High-priority topics in today's plan</b><p>${impToday.map(t=>`${esc(t.name)} (${esc(subName(t.subjectId))})`).join(', ')} — your question analysis marks these as frequently asked. Give them extra time.</p></div></div>`;
+  if (missed.length) al += `<div class="alert"><span class="ic" style="background:var(--surface-2)">${missed.length}</span><div><b>Missed plans from earlier days</b><p>${missed.slice(0,3).map(p=>esc(topicName(p.topicId)||p.title||subName(p.subjectId))).join(', ')}${missed.length>3?'…':''}</p><div class="row"><button class="btn sm" data-act="moveAllMissed">Move all to today</button><button class="btn sm ghost" data-act="go" data-v="plan">Review in planner</button></div></div></div>`;
+  if (!hasSample && fileState !== 'ok' && (bAge === null || bAge > 6) && arr('topics').length) al += `<div class="alert"><span class="ic" style="background:var(--haldi-soft);color:var(--haldi-ink)">⤓</span><div><b>Back up your data</b><p>Everything lives in this browser. If browser data is cleared, it's gone. Turn on auto-backup to a file, or export a copy.</p><div class="row"><button class="btn sm primary" data-act="linkFile">Turn on auto-backup</button><button class="btn sm" data-act="exportJSON">Export now</button></div></div></div>`;
+  return `
+  <div class="hero">
+    <div class="stat count"><div class="k">${esc(st.examName||'Exam date')}</div><div class="v">${left===null?'Set it':left>0?`${left} days left`:left===0?'Exam day':'Exam passed'}</div><button data-act="settings">Change</button></div>
+    <div class="stat goal"><div class="k">Studied today <span class="streak" title="Days in a row you hit your daily goal">${stk} day streak</span></div><div class="v">${mins(tMin)} <small>of ${mins(goal)}</small></div><div class="bar"><i style="width:${Math.min(100,pct(tMin,goal))}%"></i></div></div>
+    <div class="stat"><div class="k">Topics completed</div><div class="v">${tDone}<small>/${tAll.length}</small></div></div>
+    <div class="stat"><div class="k">This week</div><div class="v">${round1(minsBetween(addDays(td,-6),td)/60)}<small>h</small></div></div>
+  </div>
+  ${al}
+  <div class="grid2">
+    <section class="card"><h2>Today's plan <small>${fmtD(td)}</small><span class="spacer"></span><button class="btn sm primary" data-act="addPlan" data-date="${td}">+ Plan</button></h2>
+      <div class="list">${plansToday.length ? plansToday.map(p=>planRow(p)).join('') : '<div class="empty">Nothing planned for today</div>'}</div></section>
+    <section class="card"><h2>Revision due <small>${due.length}</small><span class="spacer"></span><button class="btn sm ghost" data-act="go" data-v="revision">All →</button></h2>
+      <div class="list">${due.length ? due.slice(0,6).map(t=>revRow(t)).join('') : '<div class="empty">No revision due today</div>'}</div></section>
+    <section class="card"><h2>Coming up <small>next 7 days</small><span class="spacer"></span><button class="btn sm ghost" data-act="go" data-v="plan">Planner →</button></h2>
+      <div class="list">${upcoming.length ? upcoming.slice(0,7).map(p=>planRow(p,true)).join('') : '<div class="empty">Nothing planned for the coming week</div>'}</div></section>
+    <section class="card"><h2>Where to focus<span class="spacer"></span><button class="btn sm ghost" data-act="go" data-v="analysis">Analysis →</button></h2>
+      <div class="list">${focus.length ? focus.map(mistakeRow).join('') : '<div class="empty">Log mistakes after each exam — they show up here</div>'}</div></section>
+    <section class="card"><h2>Today's study log <small>${mins(tMin)}</small><span class="spacer"></span><button class="btn sm" data-act="logSession">+ Log time</button><button class="btn sm primary" data-act="startDlg">▶ Start</button></h2>
+      <div class="list">${sess.length ? sess.map(sessionRow).join('') : '<div class="empty">No study logged yet today. Press <kbd>S</kbd> to start a timer.</div>'}</div></section>
+  </div>`;
+}
+
+/* ----- SUBJECTS ----- */
+function vSubjects(){
+  if (ui.subjectId && S.subjects[ui.subjectId]) return vSubject(S.subjects[ui.subjectId]);
+  const subs = subjects(), total = subs.reduce((a,s)=>a+(+s.marks||0),0);
+  const m30 = addDays(today(), -29);
+  return `<div class="row"><span class="muted small">${subs.length} subjects · ${total} marks</span><span class="spacer"></span><button class="btn sm" data-act="addSubject">+ Subject</button><button class="btn sm" data-act="addVideo">+ Video</button><button class="btn sm primary" data-act="addTopic">+ Topic</button></div>
+  <div class="subgrid">${subs.map(s => {
+    const ts = topicsOf(s.id), d = ts.filter(t=>t.status==='done').length;
+    const imp = ts.filter(t=>isImp(t)&&t.status!=='done').length;
+    const du = ts.filter(t=>{const r=revState(t);return r==='over'||r==='due';}).length;
+    const sm = arr('sessions').filter(x=>x.subjectId===s.id && x.d>=m30).reduce((a,x)=>a+x.min,0);
+    return `<button class="subcard" data-act="openSubject" data-id="${s.id}">
+      <div class="row" style="flex-wrap:nowrap;align-items:flex-start"><h3>${esc(s.name)}</h3><span class="marks">${esc(s.marks||0)} marks</span></div>
+      <div class="bar"><i style="width:${pct(d,ts.length)}%"></i></div>
+      <div class="meta"><span class="pill">${d}/${ts.length} topics</span>${sm?`<span class="pill">${mins(sm)} / 30d</span>`:''}${imp?`<span class="pill imp">${imp} high-priority left</span>`:''}${du?`<span class="pill over">${du} revision</span>`:''}</div>
+    </button>`;}).join('')}</div>`;
+}
+function topicRow(t){
+  const r = revState(t), vc = arr('videos').filter(v=>v.topicId===t.id).length, mc = arr('mistakes').filter(m=>m.topicId===t.id&&!m.resolved).length, cc = arr('cards').filter(c=>c.topicId===t.id).length;
+  const sm = arr('sessions').filter(s=>s.topicId===t.id).reduce((a,s)=>a+s.min,0);
+  return `<div class="item clk" data-act="openTopic" data-id="${t.id}">${meter(t.importance)}
+    <div class="mt"><div class="t">${esc(t.name)}${sampleTag(t)}</div>
+      <div class="s"><span class="pill st-${t.status||'todo'}">${STATUS[t.status||'todo']}</span>${t.pyq?`<span>Asked: ${esc(t.pyq)}</span>`:''}${r?`<span class="pill ${r==='over'?'over':r==='due'?'due':''}">revise ${rel(t.nextRev)}</span>`:''}${sm?`<span>${mins(sm)} studied</span>`:''}${vc?`<span>${vc} video${vc>1?'s':''}</span>`:''}${cc?`<span>${cc} cards</span>`:''}${mc?`<span class="down">${mc} mistake${mc>1?'s':''}</span>`:''}</div>
+    </div></div>`;
+}
+function vSubject(s){
+  const all = sortBy(topicsOf(s.id), t => (9-(t.importance||0)) + (t.name||'').toLowerCase());
+  const f = ui.filter;
+  const ts = all.filter(t => f==='all' ? true : f==='imp' ? isImp(t) : f==='due' ? ['over','due'].includes(revState(t)) : (t.status||'todo')===f);
+  const top = all.filter(t=>isImp(t) && t.status!=='done').slice(0,8);
+  const vids = arr('videos').filter(v=>v.subjectId===s.id);
+  const chip = (k,l) => `<button class="chip" data-act="filter" data-f="${k}" aria-pressed="${f===k}">${l}</button>`;
+  return `<div class="row"><button class="back" data-act="backSubjects">← All subjects</button><span class="spacer"></span><span class="marks">${esc(s.marks||0)} marks</span><button class="btn sm ghost" data-act="editSubject" data-id="${s.id}">Edit subject</button><button class="btn sm" data-act="startDlg" data-sid="${s.id}">▶ Study this</button></div>
+  ${top.length?`<div class="alert imp"><span class="ic">!</span><div><b>Most important here — not finished yet</b><p>${top.map(t=>esc(t.name)).join(' · ')}</p></div></div>`:''}
+  <section class="card">
+    <div class="sec-h"><h2>Topics <small>${all.length}</small></h2><span class="spacer"></span><button class="btn sm" data-act="bulkTopics" data-sid="${s.id}">Bulk add from analysis</button><button class="btn sm primary" data-act="addTopic" data-sid="${s.id}">+ Topic</button></div>
+    <div class="chips" style="margin-bottom:6px">${chip('all','All')}${chip('imp','High priority')}${chip('due','Revision due')}${chip('todo','Not started')}${chip('doing','In progress')}${chip('done','Completed')}</div>
+    <div class="list">${ts.length ? ts.map(topicRow).join('') : `<div class="empty">${all.length?'Nothing matches this filter':'No topics yet — add them from your question analysis'}</div>`}</div>
+  </section>
+  <section class="card"><div class="sec-h"><h2>Video tutorials <small>${vids.length}</small></h2><span class="spacer"></span><button class="btn sm" data-act="addVideo" data-sid="${s.id}">+ Video</button></div>
+    <div class="list">${vids.length ? sortBy(vids, v=>v.done?1:0).map(videoRow).join('') : '<div class="empty">Add the videos you plan to watch for this subject</div>'}</div>
+  </section>`;
+}
+
+/* ----- REVISION ----- */
+function vRevision(){
+  const td = today();
+  const withRev = sortBy(arr('topics').filter(t=>t.nextRev), t=>t.nextRev);
+  const g = {over:[], due:[], week:[], later:[]};
+  withRev.forEach(t => { const n = diff(td, t.nextRev); (n<0?g.over:n===0?g.due:n<=7?g.week:g.later).push(t); });
+  const cards = arr('cards'), weakC = cards.filter(c=>(c.wrong||0) > (c.right||0)).length;
+  const block = (title, list) => list.length ? `<section class="card"><h2>${title} <small>${list.length}</small></h2><div class="list">${list.map(t=>revRow(t,true)).join('')}</div></section>` : '';
+  return `<div class="grid2">
+    <div class="alert info" style="align-self:start"><span class="ic">↻</span><div><b>How the schedule works</b><p>Mark a topic “Completed” and the first revision comes the next day, then after ${INT.slice(1).join(', ')} days. “Hard” shortens the gap so weak topics come back more often.</p></div></div>
+    <section class="card"><h2>Flashcards <small>${cards.length} cards${weakC?` · ${weakC} weak`:''}</small><span class="spacer"></span><button class="btn sm primary" data-act="practice">Practice</button></h2><p class="small muted" style="margin:0">Add quick Q&A cards inside any topic (facts, dates, names). Practice puts the ones you miss first.</p></section>
+  </div>
+  ${block('Overdue', g.over)}${block('Due today', g.due)}${block('This week', g.week)}${block('Later', g.later)}
+  ${!withRev.length?'<div class="empty">No topic is completed yet. Open a topic and press “Completed” to start its revision schedule.</div>':''}`;
+}
+
+/* ----- PLAN ----- */
+function vPlan(){
+  const td = today();
+  const plans = sortBy(arr('plans'), p=>p.date+(p.time||''));
+  const future = plans.filter(p=>p.date>=td);
+  const missed = missedPlans();
+  const past = plans.filter(p=>p.date<td && p.date>=addDays(td,-14)).reverse();
+  const gf = {}; future.forEach(p=>(gf[p.date]=gf[p.date]||[]).push(p));
+  const days = Object.keys(gf).sort();
+  const wk = []; for (let i=0;i<7;i++){ const d = addDays(td,i); const ps = gf[d]||[]; wk.push({d, n:ps.length, m:ps.reduce((a,p)=>a+(p.targetMin||0),0)}); }
+  return `<div class="row"><span class="muted small">What, when and from where — plan it here</span><span class="spacer"></span><button class="btn sm" data-act="bulkPlan">Plan a week</button><button class="btn sm primary" data-act="addPlan" data-date="${td}">+ Plan</button><kbd>P</kbd></div>
+  <section class="card"><h2>Next 7 days <small>planned time</small></h2>
+    <div class="hbar">${wk.map(x=>`<span class="lbl">${x.d===td?'Today':fmtD(x.d)}</span><span class="trk"><i style="width:${Math.min(100,pct(x.m, Math.max(+S.settings.dailyGoalMin||240, ...wk.map(y=>y.m))))}%"></i></span><span class="val">${x.n?`${x.n} · ${mins(x.m)}`:'—'}</span>`).join('')}</div>
+  </section>
+  ${missed.length?`<section class="card"><h2>Missed <small>${missed.length}</small><span class="spacer"></span><button class="btn sm" data-act="moveAllMissed">Move all to today</button></h2><div class="list">${sortBy(missed,p=>p.date).map(p=>planRow(p,true)).join('')}</div></section>`:''}
+  <section class="card"><h2>Upcoming</h2>
+    ${days.length ? days.map(d=>`<div class="day-h ${d===td?'today':''}">${fmtD(d)} <small>${rel(d)}</small><span class="spacer"></span><button class="btn sm ghost" data-act="addPlan" data-date="${d}">+ add</button></div><div class="list">${gf[d].map(p=>planRow(p)).join('')}</div>`).join('') : '<div class="empty">No plans yet — press “+ Plan” to start</div>'}
+  </section>
+  <section class="card"><div class="sec-h"><h2>Last 14 days <small>${past.filter(p=>p.done).length}/${past.length} done</small></h2><span class="spacer"></span><button class="btn sm ghost" data-act="togglePast">${ui.showPast?'Hide':'Show'}</button></div>
+    ${ui.showPast ? (past.length ? `<div class="list">${past.map(p=>planRow(p,true)).join('')}</div>` : '<div class="empty">Nothing here</div>') : ''}
+  </section>`;
+}
+
+/* ----- ANALYSIS ----- */
+function heatmap(){
+  const td = today(), tot = dayTotals(), goal = +S.settings.dailyGoalMin || 240;
+  const end = parse(td); const start = new Date(end); start.setDate(start.getDate() - 7*17 - ((end.getDay()+6)%7)); // Monday, 18 weeks
+  const cells = []; const d = new Date(start);
+  const endW = new Date(end); endW.setDate(endW.getDate() + (7 - ((end.getDay()+6)%7) - 1));
+  while (d <= endW) { const s = ymd(d); const m = tot[s]||0; const fut = s > td; const l = fut ? 'fut' : !m ? '' : m < goal*0.25 ? 'l1' : m < goal*0.6 ? 'l2' : m < goal ? 'l3' : 'l4'; cells.push(`<i class="${l} ${s===td?'td':''}" title="${fmtD(s)}: ${fut?'—':mins(m)}"></i>`); d.setDate(d.getDate()+1); }
+  return `<div class="heat" role="img" aria-label="Study minutes per day, last 18 weeks">${cells.join('')}</div>
+  <div class="legend">Less <i style="background:var(--surface-2)"></i><i style="background:color-mix(in srgb,var(--accent) 25%,var(--surface-2))"></i><i style="background:color-mix(in srgb,var(--accent) 50%,var(--surface-2))"></i><i style="background:color-mix(in srgb,var(--accent) 75%,var(--surface-2))"></i><i style="background:var(--accent)"></i> Goal met (${mins(goal)})</div>`;
+}
+function studyBars(){
+  const td = today(); const days = []; for (let i=13;i>=0;i--) days.push(addDays(td,-i));
+  const tot = dayTotals(); const vals = days.map(d=>tot[d]||0); const goal = +S.settings.dailyGoalMin||240;
+  const top = Math.ceil(Math.max(60, goal, ...vals)/60)*60; const W=420, H=180, L=34, B=22, T=8; const cw=(W-L)/days.length; const bw=Math.max(6, cw-10);
+  const y = v => T + (H-T-B) * (1 - v/top);
+  const ticks = [0, top/2, top];
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Study time, last 14 days">
+    ${ticks.map(tk=>`<line class="gl" x1="${L}" x2="${W}" y1="${y(tk)}" y2="${y(tk)}"/><text class="axl" x="${L-6}" y="${y(tk)+4}" text-anchor="end">${round1(tk/60)}h</text>`).join('')}
+    <line x1="${L}" x2="${W}" y1="${y(goal)}" y2="${y(goal)}" stroke="var(--haldi)" stroke-dasharray="4 4" stroke-width="1.5"/><text class="axl" x="${W}" y="${y(goal)-5}" text-anchor="end" style="fill:var(--haldi-ink)">goal</text>
+    ${days.map((d,i)=>{ const v=vals[i], x=L+i*cw+(cw-bw)/2, hh=(H-T-B)*v/top; return `<g><title>${fmtD(d)}: ${mins(v)}</title><rect x="${L+i*cw}" y="${T}" width="${cw}" height="${H-T-B}" fill="transparent"/><rect class="b" x="${x}" y="${y(v)}" width="${bw}" height="${v?Math.max(2,hh):0}" rx="2"/>${i%2===1?`<text class="axl" x="${x+bw/2}" y="${H-5}" text-anchor="middle">${parse(d).getDate()}</text>`:''}</g>`; }).join('')}
+  </svg></div>`;
+}
+function scoreLine(exams){
+  const ex = sortBy(exams.filter(e=>e.total>0), e=>e.date);
+  if (ex.length < 2) return `<div class="empty">Log two or more exams to see your score trend${ex.length?` — latest: ${ex[0].score}/${ex[0].total}`:''}</div>`;
+  const W=420,H=180,L=34,R=16,B=22,T=16;
+  const y = v => T+(H-T-B)*(1-v/100);
+  const pts = ex.map((e,i)=>({x: L + i*(W-L-R)/(ex.length-1), y: y(e.score/e.total*100), e}));
+  const lp = pts[pts.length-1];
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Exam score percentage over time">
+    ${[0,50,100].map(v=>`<line class="gl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="axl" x="${L-6}" y="${y(v)+4}" text-anchor="end">${v}%</text>`).join('')}
+    <polyline class="ln" points="${pts.map(p=>`${p.x},${p.y}`).join(' ')}"/>
+    ${pts.map((p,i)=>`<circle class="pt" cx="${p.x}" cy="${p.y}" r="${i===pts.length-1?6:4.5}"><title>${esc(p.e.name)} · ${fmtD(p.e.date)} · ${p.e.score}/${p.e.total} (${pct(p.e.score,p.e.total)}%)</title></circle>`).join('')}
+    <text class="axl" x="${lp.x}" y="${lp.y-11}" text-anchor="end" style="fill:var(--ink)">${pct(lp.e.score,lp.e.total)}%</text>
+  </svg></div>`;
+}
+function vAnalysis(){
+  const td = today();
+  const exams = sortBy(arr('exams'), e=>e.date, -1);
+  const ms = arr('mistakes'), open = ms.filter(m=>!m.resolved);
+  const subs = subjects();
+  // week comparison
+  const w0 = [addDays(td,-6), td], w1 = [addDays(td,-13), addDays(td,-7)];
+  const cnt = (list, f, [a,b]) => list.filter(x => { const d = f(x); return d && d >= a && d <= b; }).length;
+  const revs = r => arr('topics').reduce((a,t)=>a+(t.revLog||[]).filter(x=>x.d>=r[0]&&x.d<=r[1]).length,0);
+  const cmp = [
+    ['Study hours', round1(minsBetween(...w0)/60), round1(minsBetween(...w1)/60)],
+    ['Topics completed', cnt(arr('topics'), t=>t.studiedAt, w0), cnt(arr('topics'), t=>t.studiedAt, w1)],
+    ['Revisions done', revs(w0), revs(w1)],
+    ['Plans finished', arr('plans').filter(p=>p.done&&p.date>=w0[0]&&p.date<=w0[1]).length, arr('plans').filter(p=>p.done&&p.date>=w1[0]&&p.date<=w1[1]).length]
+  ];
+  // subject time 30d
+  const m30 = addDays(td,-29);
+  const tBy = subs.map(s=>({s, m: arr('sessions').filter(x=>x.subjectId===s.id&&x.d>=m30).reduce((a,x)=>a+x.min,0)})).filter(x=>x.m).sort((a,b)=>b.m-a.m);
+  const mxT = Math.max(1, ...tBy.map(x=>x.m));
+  // coverage
+  const cov = subs.map(s=>{ const ts=topicsOf(s.id); return {s, d: ts.filter(t=>t.status==='done').length, n: ts.length}; });
+  const wMarks = subs.reduce((a,s)=>a+(+s.marks||0),0) || 1;
+  const covered = cov.reduce((a,c)=>a + (c.n ? (c.d/c.n)*(+c.s.marks||0) : 0), 0);
+  // subject accuracy from exams
+  const acc = subs.map(s => { let c=0,w=0,net=0,k=0; exams.forEach(e => { const b = e.bySubject?.[s.id]; if (b && (b.c||b.w)) { c+=+b.c||0; w+=+b.w||0; net += (+b.c||0) - (e.neg??0.5)*(+b.w||0); k++; } }); return {s, c, w, k, avg: k? net/k : 0}; }).filter(x=>x.k);
+  // mistakes
+  const bySub = subs.map(s=>({s, n: open.filter(m=>m.subjectId===s.id).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n);
+  const mxS = Math.max(1, ...bySub.map(x=>x.n));
+  const tByM = {}; open.forEach(m=>{ if (m.topicId) tByM[m.topicId]=(tByM[m.topicId]||0)+1; });
+  const weak = Object.entries(tByM).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([id,n])=>({t:S.topics[id], n})).filter(x=>x.t);
+  const negLost = exams.reduce((a,e)=>a + (e.wrong ? e.wrong*(e.neg??0.5) : 0), 0);
+  return `<div class="row"><span class="muted small">Take exams, log mistakes — the app shows where to push</span><span class="spacer"></span><button class="btn sm" data-act="addMistake">+ Mistake / weak area</button><button class="btn sm primary" data-act="addExam">+ Exam</button></div>
+  <section class="card"><h2>This week vs last week</h2><div class="cmp">${cmp.map(([k,a,b])=>{ const d = round1(a-b); return `<div><div class="k">${k}</div><div class="v">${a}</div><div class="d ${d>0?'up':d<0?'down':'muted'}">${d>0?'▲ +':d<0?'▼ ':''}${d===0?'same as last week':`${d} vs last week`}</div></div>`; }).join('')}</div></section>
+  <section class="card"><h2>Study consistency <small>last 18 weeks</small><span class="spacer"></span><span class="small muted">${streak()} day streak</span></h2>${heatmap()}</section>
+  <div class="grid2">
+    <section class="card"><h2>Exam score trend</h2>${scoreLine(exams)}</section>
+    <section class="card"><h2>Study time <small>last 14 days</small></h2>${studyBars()}</section>
+    <section class="card"><h2>Subject-wise exam performance <small>avg net marks per exam</small></h2>
+      ${acc.length?`<div class="hbar">${acc.map(x=>`<span class="lbl" title="${esc(x.s.name)}">${esc(x.s.name)}</span><span class="trk"><i style="width:${Math.max(0,Math.min(100,pct(x.avg, +x.s.marks||1)))}%"></i></span><span class="val">${round1(x.avg)}/${x.s.marks} · ${pct(x.c,x.c+x.w)}% acc.</span>`).join('')}</div><p class="small muted" style="margin:10px 0 0">Accuracy = correct ÷ attempted. Low accuracy with many attempts means guessing is costing you negative marks.</p>`:'<div class="empty">Add a subject breakdown when you log an exam to see this</div>'}
+    </section>
+    <section class="card"><h2>Syllabus coverage <small>${pct(covered,wMarks)}% by marks</small></h2>
+      <div class="hbar">${cov.map(c=>`<span class="lbl" title="${esc(c.s.name)}">${esc(c.s.name)}</span><span class="trk"><i style="width:${pct(c.d,c.n)}%"></i></span><span class="val">${c.d}/${c.n}</span>`).join('')}</div>
+    </section>
+    <section class="card"><h2>Time by subject <small>last 30 days</small></h2>
+      ${tBy.length?`<div class="hbar">${tBy.map(x=>`<span class="lbl">${esc(x.s.name)}</span><span class="trk"><i style="width:${pct(x.m,mxT)}%"></i></span><span class="val">${mins(x.m)} · ${x.s.marks}m</span>`).join('')}</div><p class="small muted" style="margin:10px 0 0">Compare time spent with the subject's marks to spot what you're neglecting.</p>`:'<div class="empty">Log study time to see this</div>'}
+    </section>
+    <section class="card"><h2>Open mistakes <small>by subject</small></h2>
+      ${bySub.length?`<div class="hbar">${bySub.map(x=>`<span class="lbl">${esc(x.s.name)}</span><span class="trk"><i class="warm" style="width:${pct(x.n,mxS)}%"></i></span><span class="val">${x.n}</span>`).join('')}</div>`:'<div class="empty">No open mistakes</div>'}
+      ${weak.length?`<div class="small muted" style="margin:14px 0 4px">Weakest topics</div><div class="list">${weak.map(({t,n})=>`<div class="item clk" data-act="openTopic" data-id="${t.id}"><div class="mt"><div class="t">${esc(t.name)}</div><div class="s"><span>${esc(subName(t.subjectId))}</span></div></div><span class="pill over">${n} open</span></div>`).join('')}</div>`:''}
+    </section>
+  </div>
+  <section class="card"><h2>Exams <small>${exams.length}${negLost?` · ${round1(negLost)} marks lost to negative marking`:''}</small></h2>
+    ${exams.length?`<div class="tablewrap"><table class="t"><thead><tr><th>Exam</th><th>Date</th><th class="n">Correct</th><th class="n">Wrong</th><th class="n">Neg. lost</th><th class="n">Score</th><th class="n">%</th><th class="n">Mistakes</th><th></th></tr></thead><tbody>${exams.map(e=>`<tr><td>${esc(e.name)}${sampleTag(e)}</td><td>${fmtD(e.date)}</td><td class="n">${e.correct??'—'}</td><td class="n">${e.wrong??'—'}</td><td class="n">${e.wrong?round1(e.wrong*(e.neg??0.5)):'—'}</td><td class="n">${e.score}/${e.total}</td><td class="n">${pct(e.score,e.total)}</td><td class="n">${ms.filter(m=>m.examId===e.id).length}</td><td><button class="btn sm ghost" data-act="addMistake" data-exam="${e.id}">+ mistake</button><button class="icon-btn" data-act="editExam" data-id="${e.id}" aria-label="Edit">✎</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Log your model tests and practice exams here</div>'}
+  </section>
+  <section class="card"><h2>Mistake & weak-area log <small>${open.length} open</small></h2>
+    <div class="list">${ms.length ? sortBy(ms, m=>(m.resolved?'1':'0')+(m.date||'')).map(mistakeRow).join('') : '<div class="empty">Nothing logged yet</div>'}</div>
+  </section>`;
+}
+
+/* ================= topic drawer ================= */
+function openTopic(id){
+  closeDialog(); ui.detail = id; renderDetail(true);
+  const t = S.topics[id]; if (isImp(t) && t.status !== 'done') toast(`High-priority topic — importance ${t.importance}/5`);
+}
+function closeDetail(){ ui.detail = null; const L = $('#detailLayer'); L.hidden = true; L.innerHTML = ''; }
+function renderDetail(first){
+  const t = S.topics[ui.detail], L = $('#detailLayer');
+  if (!t) { closeDetail(); return; }
+  const keep = first ? 0 : (L.querySelector('.body')?.scrollTop || 0);
+  const vids = arr('videos').filter(v=>v.topicId===t.id);
+  const ms = sortBy(arr('mistakes').filter(m=>m.topicId===t.id), m=>m.resolved?1:0);
+  const plans = sortBy(arr('plans').filter(p=>p.topicId===t.id && p.date>=today()), p=>p.date);
+  const sess = sortBy(arr('sessions').filter(s=>s.topicId===t.id), s=>s.at||0, -1);
+  const cards = arr('cards').filter(c=>c.topicId===t.id);
+  const st = t.status||'todo', r = revState(t);
+  const seg = k => `<button data-act="setStatus" data-id="${t.id}" data-s="${k}" aria-pressed="${st===k}">${STATUS[k]}</button>`;
+  L.innerHTML = `<div class="scrim" data-act="closeDetail"></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-label="${esc(t.name)}">
+    <header><div style="flex:1;min-width:0"><div class="small muted">${esc(subName(t.subjectId))}</div><h2>${esc(t.name)}${sampleTag(t)}</h2></div>
+      ${S.timer?'':`<button class="btn sm primary" data-act="startDlg" data-sid="${t.subjectId}" data-tid="${t.id}">▶ Study</button>`}<button class="btn sm ghost" data-act="editTopic" data-id="${t.id}">Edit</button><button class="icon-btn" data-act="closeDetail" aria-label="Close">×</button></header>
+    <div class="body">
+      ${isImp(t)?`<div class="alert imp"><span class="ic">!</span><div><b>High-priority topic</b> ${meter(t.importance)}<p>${t.pyq?`Asked in: ${esc(t.pyq)}. `:''}${t.qCount?`About ${esc(t.qCount)} questions so far. `:''}Your analysis says questions come from here often.</p></div></div>`
+        : `<div class="row small"><span class="muted">Importance</span> ${meter(t.importance)}${t.pyq?`<span class="muted">· Asked in: ${esc(t.pyq)}</span>`:''}</div>`}
+      ${t.note?`<div><div class="small muted" style="margin-bottom:4px">My analysis / notes</div><p class="note">${esc(t.note)}</p></div>`:''}
+      <div class="card"><div class="sec-h"><h3>Status</h3><span class="spacer"></span><span class="small muted">${mins(sess.reduce((a,s)=>a+s.min,0))} studied in total</span></div><div class="seg">${seg('todo')}${seg('doing')}${seg('done')}</div></div>
+      <div class="card"><div class="sec-h"><h3>Revision</h3><span class="spacer"></span>${t.nextRev?`<span class="pill ${r==='over'?'over':r==='due'?'due':'acc'}">next ${rel(t.nextRev)}</span>`:''}</div>
+        ${t.nextRev ? `<div class="small muted" style="margin-bottom:8px">Completed ${t.studiedAt?fmtD(t.studiedAt):'—'} · revised ${(t.revLog||[]).length}× · next on ${fmtD(t.nextRev)}</div>
+          <div class="row">${cards.length?`<button class="btn sm" data-act="quizTopic" data-id="${t.id}">Quiz me first</button>`:''}<button class="btn sm ok" data-act="revise" data-id="${t.id}" data-g="good">Revised — went well</button><button class="btn sm" data-act="revise" data-id="${t.id}" data-g="hard">It was hard</button><button class="btn sm ghost" data-act="snooze" data-id="${t.id}">+1 day</button></div>
+          ${(t.revLog||[]).length?`<div class="chips" style="margin-top:10px">${t.revLog.slice().reverse().map(x=>`<span class="pill ${x.r==='hard'?'due':'ok'}">${fmtD(x.d)}${x.r==='hard'?' · hard':''}</span>`).join('')}</div>`:''}`
+        : `<p class="small muted" style="margin:0 0 8px">Finished studying this topic? Press below — reminders start from tomorrow.</p><button class="btn sm primary" data-act="setStatus" data-id="${t.id}" data-s="done">Completed — start revision schedule</button>`}
+      </div>
+      <div class="card"><div class="sec-h"><h3>Flashcards <small>${cards.length}</small></h3><span class="spacer"></span>${cards.length?`<button class="btn sm" data-act="quizTopic" data-id="${t.id}">Quiz</button>`:''}<button class="btn sm" data-act="bulkCards" data-tid="${t.id}">Bulk add</button><button class="btn sm" data-act="addCard" data-tid="${t.id}">+ Card</button></div>
+        <div class="list">${cards.length?cards.map(c=>`<div class="item"><div class="mt"><div class="t">${esc(c.q)}${sampleTag(c)}</div><div class="s"><span>${esc(c.a)}</span>${(c.right||c.wrong)?`<span class="${(c.wrong||0)>(c.right||0)?'down':'up'}">${c.right||0}✓ ${c.wrong||0}✗</span>`:''}</div></div><button class="icon-btn" data-act="editCard" data-id="${c.id}" aria-label="Edit">✎</button></div>`).join(''):'<div class="empty">Turn key facts into Q&A cards for quick revision</div>'}</div></div>
+      <div class="card"><div class="sec-h"><h3>Videos <small>${vids.length}</small></h3><span class="spacer"></span><button class="btn sm" data-act="addVideo" data-sid="${t.subjectId}" data-tid="${t.id}">+ Video</button></div>
+        <div class="list">${vids.length?vids.map(videoRow).join(''):'<div class="empty">No videos yet</div>'}</div></div>
+      <div class="card"><div class="sec-h"><h3>Study sessions <small>${sess.length}</small></h3><span class="spacer"></span><button class="btn sm" data-act="logSession" data-sid="${t.subjectId}" data-tid="${t.id}">+ Log time</button></div>
+        <div class="list">${sess.length?sess.slice(0,8).map(s=>`<div class="item"><span class="time" style="width:auto">${fmtD(s.d)}${s.at?` ${hm(new Date(s.at))}`:''}</span><div class="mt"><div class="s"><span class="pill">${SKIND[s.kind]||'Study'}</span>${s.videoId?`<span>${esc(S.videos[s.videoId]?.title||'')}</span>`:''}${s.note?`<span>${esc(s.note)}</span>`:''}</div></div><span class="mono small">${mins(s.min)}</span><button class="icon-btn" data-act="editSession" data-id="${s.id}" aria-label="Edit">✎</button></div>`).join(''):'<div class="empty">No sessions logged</div>'}</div></div>
+      <div class="card"><div class="sec-h"><h3>Mistakes & focus points</h3><span class="spacer"></span><button class="btn sm" data-act="addMistake" data-sid="${t.subjectId}" data-tid="${t.id}">+ Add</button></div>
+        <div class="list">${ms.length?ms.map(mistakeRow).join(''):'<div class="empty">Nothing logged</div>'}</div></div>
+      <div class="card"><div class="sec-h"><h3>Upcoming plans</h3><span class="spacer"></span><button class="btn sm" data-act="addPlan" data-sid="${t.subjectId}" data-tid="${t.id}">+ Plan</button></div>
+        <div class="list">${plans.length?plans.map(p=>planRow(p,true)).join(''):'<div class="empty">Not planned yet</div>'}</div></div>
+    </div>
+  </aside>`;
+  L.hidden = false;
+  const b = L.querySelector('.body'); if (b) b.scrollTop = keep;
+}
+
+/* ================= dialogs ================= */
+const subjectOptions = sel => subjects().map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${esc(s.name)}</option>`).join('');
+const topicOptions = (sid, sel) => `<option value="">— Topic (optional) —</option>` + sortBy(topicsOf(sid), t=>t.name).map(t=>`<option value="${t.id}" ${t.id===sel?'selected':''}>${esc(t.name)}</option>`).join('');
+const videoOptions = (sid, tid, sel) => `<option value="">— Video (optional) —</option>` + arr('videos').filter(v=>v.subjectId===sid && (!tid || !v.topicId || v.topicId===tid)).map(v=>`<option value="${v.id}" ${v.id===sel?'selected':''}>${esc(v.title)}</option>`).join('');
+const fld = (label, inner, cls='', hint='') => `<label class="fld ${cls}"><span>${label}</span>${inner}${hint?`<small>${hint}</small>`:''}</label>`;
+const subTopic = (sid, tid, withVideo, vid) => { sid = sid || subjects()[0]?.id; return `<div class="fgrid">${fld('Subject', `<select name="subjectId" data-dep required>${subjectOptions(sid)}</select>`)}${fld('Topic', `<select name="topicId" data-dep>${topicOptions(sid, tid)}</select>`)}${withVideo?fld('Video', `<select name="videoId">${videoOptions(sid, tid, vid)}</select>`,'full'):''}</div>`; };
+function wireDeps(f){
+  const sub = f.querySelector('select[name=subjectId][data-dep]'), top = f.querySelector('select[name=topicId]'), vid = f.querySelector('select[name=videoId]');
+  if (sub && top) sub.addEventListener('change', () => { top.innerHTML = topicOptions(sub.value, ''); if (vid) vid.innerHTML = videoOptions(sub.value, '', ''); });
+  if (top && vid) top.addEventListener('change', () => { vid.innerHTML = videoOptions(sub.value, top.value, ''); });
+}
+function closeDialog(){ const L = $('#dialogLayer'); L.hidden = true; L.innerHTML = ''; }
+function openDialog(title, body, onSubmit, opt={}){
+  const L = $('#dialogLayer');
+  L.innerHTML = `<div class="scrim dlg-scrim" data-act="closeDialog"></div><div class="dialog"><form class="dlg-card ${opt.wide?'wide':''}" autocomplete="off" novalidate><header><h3>${esc(title)}</h3><button type="button" class="icon-btn" data-act="closeDialog" aria-label="Close">×</button></header><div class="dlg-body">${body}</div>${onSubmit?`<footer>${opt.del?`<button type="button" class="btn danger" data-act="del" data-col="${opt.del[0]}" data-id="${opt.del[1]}" style="margin-right:auto">Delete</button>`:'<span class="small muted" style="margin-right:auto"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> to save</span>'}<button type="button" class="btn ghost" data-act="closeDialog">Cancel</button><button type="submit" class="btn primary">${opt.submit||'Save'}</button></footer>`:''}</form></div>`;
+  L.hidden = false;
+  const f = L.querySelector('form'); wireDeps(f);
+  if (onSubmit) {
+    f.addEventListener('submit', e => {
+      e.preventDefault();
+      const bad = [...f.querySelectorAll('[required]')].find(x => !String(x.value).trim());
+      if (bad) { bad.focus(); toast('Please fill in the required field'); return; }
+      const fd = {}; new FormData(f).forEach((v,k)=>{ fd[k] = typeof v === 'string' ? v.trim() : v; });
+      f.querySelectorAll('input[type=checkbox]').forEach(c => fd[c.name] = c.checked);
+      const next = onSubmit(fd, f);
+      if (next === false) return;
+      closeDialog(); commit(opt.ok);
+      if (typeof next === 'function') next();
+    });
+    f.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey||e.metaKey)) { e.preventDefault(); f.requestSubmit(); } });
+  }
+  if (opt.mount) opt.mount(f);
+  setTimeout(() => (f.querySelector('[autofocus]') || f.querySelector('input:not([type=radio]):not([type=checkbox]):not([type=file]),textarea'))?.focus({preventScroll:true}), 30);
+  return f;
+}
+const impField = v => `<div class="fld"><span>Importance (from your question analysis)</span><div class="stars">${[1,2,3,4,5].map(i=>`<label><input type="radio" name="importance" value="${i}" ${i===(+v||3)?'checked':''}><span>${i}</span></label>`).join('')}</div><small>4–5 marks the topic high-priority: you'll get a warning whenever you open or plan it</small></div>`;
+const newTopic = (o) => ({status:'todo', revStage:0, nextRev:null, revLog:[], note:'', pyq:'', qCount:null, createdAt:Date.now(), ...o});
+
+function dlgTopic(t, sid){
+  const e = t || {};
+  openDialog(t ? 'Edit topic' : 'New topic', `
+    ${fld('Subject', `<select name="subjectId" required>${subjectOptions(e.subjectId || sid || subjects()[0]?.id)}</select>`)}
+    ${fld('Topic name', `<input name="name" required value="${esc(e.name)}" placeholder="e.g. Liberation War sectors, সমাস">`)}
+    ${impField(e.importance)}
+    <div class="fgrid">${fld('Asked in which exams', `<input name="pyq" value="${esc(e.pyq)}" placeholder="10th, 35th, 44th">`)}${fld('Questions so far (approx.)', `<input name="qCount" type="number" min="0" value="${esc(e.qCount)}">`)}</div>
+    ${fld('Analysis / notes', `<textarea name="note" placeholder="Which parts get asked, what to remember…">${esc(e.note)}</textarea>`)}
+  `, d => {
+    const data = {subjectId:d.subjectId, name:d.name, importance:+d.importance||3, pyq:d.pyq, qCount:d.qCount?+d.qCount:null, note:d.note};
+    if (t) Object.assign(S.topics[t.id], data); else { const id = uid(); S.topics[id] = newTopic({id, ...data}); }
+  }, {del: t ? ['topics', t.id] : null, ok: t ? 'Saved' : 'Topic added'});
+}
+function dlgBulk(sid){
+  openDialog('Bulk add topics from your analysis', `
+    ${fld('Subject', `<select name="subjectId">${subjectOptions(sid || subjects()[0]?.id)}</select>`)}
+    ${fld('One topic per line', `<textarea name="lines" style="min-height:200px;font-family:var(--f-mono);font-size:.85rem" placeholder="সমাস | 5 | 10th, 35th, 41st, 44th | 14\nকারক ও বিভক্তি | 4 | 36th, 40th\nবাগধারা | 3"></textarea>`, '', 'Format: name | importance 1–5 | asked in | question count — only the name is required. Paste straight from Excel/Sheets with tabs too.')}
+  `, d => {
+    const rows = d.lines.split('\n').map(l=>l.trim()).filter(Boolean); let n = 0;
+    rows.forEach(l => { const [name, imp, pyq, qc] = l.split(/\s*[|\t]\s*/); if (!name) return; const id = uid()+n; S.topics[id] = newTopic({id, subjectId:d.subjectId, name, importance:Math.min(5,Math.max(1,+imp||3)), pyq:pyq||'', qCount:qc?+qc:null}); n++; });
+    if (!n) { toast('Nothing to add'); return false; }
+    setTimeout(()=>toast(`${n} topics added`), 0);
+  }, {submit:'Add all'});
+}
+function dlgSubject(s){
+  const e = s || {}, canDel = s && !topicsOf(s.id).length;
+  openDialog(s ? 'Edit subject' : 'New subject', `
+    ${fld('Subject name', `<input name="name" required value="${esc(e.name)}">`)}
+    <div class="fgrid">${fld('Marks', `<input name="marks" type="number" min="0" value="${esc(e.marks)}">`)}${fld('Order', `<input name="order" type="number" value="${esc(e.order ?? subjects().length+1)}">`)}</div>
+    ${s && !canDel ? '<small class="muted">A subject with topics cannot be deleted.</small>' : ''}
+  `, d => {
+    const data = {name:d.name, marks:+d.marks||0, order:+d.order||99};
+    if (s) Object.assign(S.subjects[s.id], data); else { const id = uid(); S.subjects[id] = {id, ...data}; }
+  }, {del: canDel ? ['subjects', s.id] : null});
+}
+function dlgVideo(v, sid, tid){
+  const e = v || {};
+  openDialog(v ? 'Edit video' : 'New video tutorial', `
+    ${fld('Title', `<input name="title" required value="${esc(e.title)}" placeholder="e.g. Samas — full class">`)}
+    ${fld('Link', `<input name="url" type="url" value="${esc(e.url)}" placeholder="https://youtube.com/…">`)}
+    <div class="fgrid">${fld('Teacher / channel', `<input name="teacher" value="${esc(e.teacher)}">`)}${fld('Length (minutes)', `<input name="lengthMin" type="number" min="0" value="${esc(e.lengthMin)}">`)}</div>
+    ${subTopic(e.subjectId || sid || ui.subjectId, e.topicId || tid)}
+    ${v?`<label class="cbx"><input type="checkbox" name="done" ${e.done?'checked':''}> Finished watching</label>`:''}
+  `, d => {
+    const data = {title:d.title, url:d.url, teacher:d.teacher, lengthMin:d.lengthMin?+d.lengthMin:null, subjectId:d.subjectId, topicId:d.topicId||null};
+    if (v) Object.assign(S.videos[v.id], data, {done:!!d.done}); else { const id = uid(); S.videos[id] = {id, ...data, done:false, createdAt:Date.now()}; }
+  }, {del: v ? ['videos', v.id] : null, ok: v ? 'Saved' : 'Video added'});
+}
+function dlgSession(s, pre={}){
+  const e = s || {}; const now = new Date();
+  openDialog(s ? 'Edit study session' : 'Log study time', `
+    <div class="fgrid3">${fld('Date', `<input name="d" type="date" required value="${esc(e.d || today())}">`)}${fld('Start time', `<input name="tm" type="time" value="${e.at?hm(new Date(e.at)):hm(new Date(now.getTime()-(+pre.min||30)*60000))}">`)}${fld('Minutes', `<input name="min" type="number" min="1" required value="${esc(e.min||pre.min||'')}" autofocus>`)}</div>
+    ${fld('Type', `<select name="kind">${Object.entries(SKIND).map(([k,l])=>`<option value="${k}" ${k===(e.kind||pre.kind||'reading')?'selected':''}>${l}</option>`).join('')}</select>`)}
+    ${subTopic(e.subjectId || pre.sid, e.topicId || pre.tid, true, e.videoId || pre.vid)}
+    ${fld('Note', `<input name="note" value="${esc(e.note)}" placeholder="optional — pages covered, etc.">`)}
+    ${pre.vid && !s ? `<label class="cbx"><input type="checkbox" name="vdone" ${S.videos[pre.vid]?.done?'checked':''}> Finished the whole video</label>`:''}
+  `, d => {
+    const [hh,mm] = (d.tm||'00:00').split(':').map(Number); const at = parse(d.d); at.setHours(hh||0, mm||0, 0, 0);
+    const data = {d:d.d, at:at.getTime(), min:+d.min, kind:d.kind, subjectId:d.subjectId, topicId:d.topicId||null, videoId:d.videoId||null, note:d.note};
+    if (s) Object.assign(S.sessions[s.id], data); else addSession(data);
+    if (d.vdone && S.videos[d.videoId]) S.videos[d.videoId].done = true;
+  }, {del: s ? ['sessions', s.id] : null, ok: s ? 'Saved' : 'Logged'});
+}
+function dlgStart(pre={}){
+  if (S.timer) { toast('A timer is already running'); return; }
+  openDialog('Start studying', `
+    ${fld('What are you doing?', `<select name="kind">${Object.entries(SKIND).map(([k,l])=>`<option value="${k}" ${k===(pre.kind||'reading')?'selected':''}>${l}</option>`).join('')}</select>`)}
+    ${subTopic(pre.sid || ui.subjectId || S.topics[ui.detail]?.subjectId, pre.tid || ui.detail, true, pre.vid)}
+    ${fld('Timer', `<select name="pomo"><option value="">Stopwatch — stop when done</option><option value="25">Pomodoro · 25 min</option><option value="45">Focus block · 45 min</option><option value="60">Focus block · 60 min</option><option value="90">Deep block · 90 min</option></select>`, '', 'Pomodoro rings when time is up; the session is logged when you press Stop & log.')}
+  `, d => { startTimer({kind:d.kind, subjectId:d.subjectId, topicId:d.topicId, videoId:d.videoId, pomo:d.pomo}); }, {submit:'▶ Start'});
+}
+function dlgPlan(p, date, sid, tid){
+  const e = p || {};
+  openDialog(p ? 'Edit plan' : 'New plan', `
+    <div class="fgrid">${fld('Date', `<input name="date" type="date" required value="${esc(e.date || date || today())}">`)}${fld('Time', `<input name="time" type="time" value="${esc(e.time)}">`)}</div>
+    ${subTopic(e.subjectId || sid || ui.subjectId, e.topicId || tid)}
+    ${fld('What (if no topic picked)', `<input name="title" value="${esc(e.title)}" placeholder="e.g. Solve previous years' questions">`)}
+    ${fld('Study from', `<input name="source" value="${esc(e.source)}" placeholder="Book & pages, notes, or which video">`)}
+    <div class="fgrid">${fld('Planned time (minutes)', `<input name="targetMin" type="number" min="0" value="${esc(e.targetMin)}">`)}${p?`<label class="cbx" style="align-self:end;padding-bottom:8px"><input type="checkbox" name="done" ${e.done?'checked':''}> Done</label>`:'<span></span>'}</div>
+  `, d => {
+    const data = {date:d.date, time:d.time, subjectId:d.subjectId, topicId:d.topicId||null, title:d.title, source:d.source, targetMin:d.targetMin?+d.targetMin:null};
+    if (p) Object.assign(S.plans[p.id], data, {done:!!d.done}); else { const id = uid(); S.plans[id] = {id, ...data, done:false, createdAt:Date.now()}; }
+    const t = S.topics[d.topicId]; if (isImp(t)) setTimeout(()=>toast(`Heads-up: “${t.name}” is high priority (${t.importance}/5)`), 0);
+  }, {del: p ? ['plans', p.id] : null, ok: p ? 'Saved' : null});
+}
+function dlgBulkPlan(){
+  const td = today();
+  openDialog('Plan a week', `
+    <p class="small muted" style="margin:0">One line per study block. Each line: <span class="mono">day offset | time | subject | topic or task | source | minutes</span>. Day offset 0 = today, 1 = tomorrow… Subject can be the first word of its name.</p>
+    ${fld('Blocks', `<textarea name="lines" style="min-height:190px;font-family:var(--f-mono);font-size:.85rem" placeholder="0 | 20:00 | Bangla | সমাস | Grammar book ch. 5 | 60\n1 | 09:00 | Math | Percentage | Previous years' questions | 90\n1 | 19:00 | Bangladesh | Constitution | Class notes | 60"></textarea>`)}
+  `, d => {
+    const subs = subjects(); let n = 0;
+    d.lines.split('\n').map(l=>l.trim()).filter(Boolean).forEach(l => {
+      const [off, time, sub, what, source, m] = l.split(/\s*[|\t]\s*/);
+      const s = subs.find(x => x.name.toLowerCase().startsWith((sub||'').toLowerCase())) || subs.find(x => x.name.toLowerCase().includes((sub||'').toLowerCase()));
+      if (!s) return;
+      const t = topicsOf(s.id).find(x => x.name.toLowerCase() === (what||'').toLowerCase()) || topicsOf(s.id).find(x => (what||'') && x.name.toLowerCase().includes(what.toLowerCase()));
+      const id = uid()+n; S.plans[id] = {id, date:addDays(td, +off||0), time:(time||'').match(/^\d{1,2}:\d{2}$/)?time.padStart(5,'0'):'', subjectId:s.id, topicId:t?.id||null, title:t?'':(what||''), source:source||'', targetMin:m?+m:null, done:false, createdAt:Date.now()}; n++;
+    });
+    if (!n) { toast('No lines matched a subject'); return false; }
+    setTimeout(()=>toast(`${n} blocks planned`), 0);
+  }, {submit:'Add to planner', wide:true});
+}
+function dlgExam(x){
+  const e = x || {}, neg = e.neg ?? S.settings.negMark ?? 0.5;
+  const bd = subjects().map(s => `<span>${esc(s.name)} <span class="muted">(${s.marks})</span></span><input name="c_${s.id}" type="number" min="0" value="${esc(e.bySubject?.[s.id]?.c ?? '')}" aria-label="${esc(s.name)} correct"><input name="w_${s.id}" type="number" min="0" value="${esc(e.bySubject?.[s.id]?.w ?? '')}" aria-label="${esc(s.name)} wrong">`).join('');
+  openDialog(x ? 'Edit exam' : 'Log an exam', `
+    ${fld('Exam name', `<input name="name" required value="${esc(e.name)}" placeholder="e.g. Model Test 3">`)}
+    <div class="fgrid3">${fld('Date', `<input name="date" type="date" required value="${esc(e.date || today())}">`)}${fld('Total marks', `<input name="total" type="number" min="1" required value="${esc(e.total ?? 200)}">`)}${fld('Negative per wrong', `<input name="neg" type="number" step="0.05" min="0" value="${esc(neg)}">`)}</div>
+    <div class="fgrid3">${fld('Correct', `<input name="correct" type="number" min="0" value="${esc(e.correct ?? '')}">`)}${fld('Wrong', `<input name="wrong" type="number" min="0" value="${esc(e.wrong ?? '')}">`)}${fld('Score (auto)', `<input name="score" type="number" step="0.25" value="${esc(e.score ?? '')}">`, '', 'Filled from correct/wrong; edit if needed')}</div>
+    <div class="calc" id="calc"></div>
+    <details class="more" ${e.bySubject && Object.keys(e.bySubject).length ? 'open' : ''}><summary>Subject-wise breakdown (optional — powers the subject performance chart)</summary>
+      <div class="bd"><span class="h">Subject</span><span class="h">Correct</span><span class="h">Wrong</span>${bd}</div>
+      <button type="button" class="btn sm" id="sumBd" style="margin-top:10px">Fill totals from breakdown</button>
+    </details>
+    ${fld('Notes', `<textarea name="note" placeholder="Time management, what felt hard…">${esc(e.note)}</textarea>`)}
+  `, d => {
+    const bySubject = {}; subjects().forEach(s => { const c = d['c_'+s.id], w = d['w_'+s.id]; if (c !== '' || w !== '') bySubject[s.id] = {c:+c||0, w:+w||0}; });
+    const correct = d.correct === '' ? null : +d.correct, wrong = d.wrong === '' ? null : +d.wrong, ng = d.neg === '' ? 0.5 : +d.neg;
+    let score = d.score === '' ? (correct !== null ? correct - ng*(wrong||0) : NaN) : +d.score;
+    if (isNaN(score)) { toast('Enter correct/wrong counts or a score'); return false; }
+    const data = {name:d.name, date:d.date, total:+d.total, neg:ng, correct, wrong, score:Math.round(score*100)/100, bySubject, note:d.note};
+    if (x) { Object.assign(S.exams[x.id], data); return; }
+    const id = uid(); S.exams[id] = {id, ...data, createdAt:Date.now()};
+    return () => dlgMistake(null, {examId:id});
+  }, {del: x ? ['exams', x.id] : null, ok: x ? 'Saved' : 'Exam logged — now note down the mistakes', wide:true, mount: f => {
+    const g = n => f.querySelector(`[name="${n}"]`); let manual = !!x;
+    const upd = () => { const c = +g('correct').value||0, w = +g('wrong').value||0, ng = +g('neg').value||0, tot = +g('total').value||200; const sc = c - ng*w; if (!manual && (g('correct').value!==''||g('wrong').value!=='')) g('score').value = Math.round(sc*100)/100; const skip = Math.max(0, tot - c - w); $('#calc').textContent = (g('correct').value!=='' ? `Attempted ${c+w} · skipped ${skip} · lost ${Math.round(ng*w*100)/100} to negatives · accuracy ${pct(c,c+w)}%` : 'Enter correct and wrong to auto-calculate the score'); };
+    ['correct','wrong','neg','total'].forEach(n => g(n).addEventListener('input', () => { manual = false; upd(); }));
+    g('score').addEventListener('input', () => manual = true);
+    f.querySelector('#sumBd').addEventListener('click', () => { let c=0,w=0; subjects().forEach(s => { c += +g('c_'+s.id).value||0; w += +g('w_'+s.id).value||0; }); g('correct').value = c; g('wrong').value = w; manual = false; upd(); });
+    upd();
+  }});
+}
+function dlgMistake(m, pre={}){
+  const e = m || {}; const exs = sortBy(arr('exams'), x=>x.date, -1);
+  openDialog(m ? 'Edit entry' : 'Log a mistake / weak area', `
+    ${fld('Type', `<select name="kind">${Object.entries(KIND).map(([k,l])=>`<option value="${k}" ${k===(e.kind||'mistake')?'selected':''}>${l}</option>`).join('')}</select>`)}
+    ${fld('What went wrong / what to focus on', `<textarea name="note" required placeholder="e.g. Mixed up the sector commanders">${esc(e.note)}</textarea>`)}
+    ${subTopic(e.subjectId || pre.sid, e.topicId || pre.tid)}
+    ${fld('From which exam', `<select name="examId"><option value="">— None —</option>${exs.map(x=>`<option value="${x.id}" ${x.id===(e.examId||pre.examId)?'selected':''}>${esc(x.name)} (${fmtD(x.date)})</option>`).join('')}</select>`)}
+    ${m?`<label class="cbx"><input type="checkbox" name="resolved" ${e.resolved?'checked':''}> Fixed it</label>`:`<label class="cbx"><input type="checkbox" name="another" checked> Save and add another</label>`}
+  `, d => {
+    const data = {kind:d.kind, note:d.note, subjectId:d.subjectId, topicId:d.topicId||null, examId:d.examId||null};
+    if (m) { Object.assign(S.mistakes[m.id], data, {resolved:!!d.resolved}); return; }
+    const id = uid(); S.mistakes[id] = {id, ...data, resolved:false, date:S.exams[d.examId]?.date || today(), createdAt:Date.now()};
+    if (d.another) return () => dlgMistake(null, {examId:d.examId, sid:d.subjectId});
+  }, {del: m ? ['mistakes', m.id] : null, ok:'Logged'});
+}
+function dlgCard(c, tid){
+  const e = c || {}; const t = S.topics[e.topicId || tid];
+  openDialog(c ? 'Edit flashcard' : 'New flashcard', `
+    <div class="small muted">${esc(t?.name||'')}</div>
+    ${fld('Question', `<textarea name="q" required style="min-height:64px">${esc(e.q)}</textarea>`)}
+    ${fld('Answer', `<textarea name="a" required style="min-height:64px">${esc(e.a)}</textarea>`)}
+    ${c?'':'<label class="cbx"><input type="checkbox" name="another" checked> Save and add another</label>'}
+  `, d => {
+    if (c) { Object.assign(S.cards[c.id], {q:d.q, a:d.a}); return; }
+    const id = uid(); S.cards[id] = {id, topicId:t.id, subjectId:t.subjectId, q:d.q, a:d.a, right:0, wrong:0, createdAt:Date.now()};
+    if (d.another) return () => dlgCard(null, t.id);
+  }, {del: c ? ['cards', c.id] : null, ok:'Card saved'});
+}
+function dlgBulkCards(tid){
+  const t = S.topics[tid];
+  openDialog('Bulk add flashcards', `<div class="small muted">${esc(t.name)}</div>
+    ${fld('One card per line', `<textarea name="lines" style="min-height:190px;font-family:var(--f-mono);font-size:.85rem" placeholder="How many sectors in 1971? | 11\nWhen did the war begin? | 26 March 1971"></textarea>`, '', 'Format: question | answer')}
+  `, d => { let n = 0; d.lines.split('\n').forEach(l => { const [q,a] = l.split(/\s*[|\t]\s*/); if (q && a) { const id = uid()+n; S.cards[id] = {id, topicId:t.id, subjectId:t.subjectId, q, a, right:0, wrong:0, createdAt:Date.now()}; n++; } }); if (!n) { toast('Use “question | answer” on each line'); return false; } setTimeout(()=>toast(`${n} cards added`),0); }, {submit:'Add cards'});
+}
+function dlgSettings(){
+  const s = S.settings; const notifOk = 'Notification' in window;
+  openDialog('Settings & backup', `
+    <div class="fgrid">${fld('Target exam', `<input name="examName" value="${esc(s.examName)}" placeholder="e.g. 51st BCS Preliminary">`)}${fld('Exam date', `<input name="examDate" type="date" value="${esc(s.examDate)}">`)}</div>
+    <div class="fgrid">${fld('Daily study goal (minutes)', `<input name="dailyGoalMin" type="number" min="15" step="15" value="${esc(s.dailyGoalMin)}">`, '', 'Used for streaks and the heatmap')}${fld('Default negative marking', `<input name="negMark" type="number" step="0.05" min="0" value="${esc(s.negMark)}">`, '', 'BCS preliminary: 0.5 per wrong answer')}</div>
+    <div class="fgrid">${fld('Theme', `<select name="theme">${[['auto','Match system'],['light','Light'],['dark','Dark']].map(([k,l])=>`<option value="${k}" ${s.theme===k?'selected':''}>${l}</option>`).join('')}</select>`)}
+      <div class="fld"><span>Desktop notifications</span>${notifOk?`<label class="cbx"><input type="checkbox" name="notify" ${s.notify?'checked':''}> Remind me about plans, revisions & pomodoros</label><small>${Notification.permission==='denied'?'Blocked by the browser — in-app reminders still work':'Works while this tab is open'}</small>`:'<small>Not supported here — in-app reminders still work</small>'}</div></div>
+    <details class="more" open><summary>Backup & restore</summary>
+      <p class="small muted" style="margin:8px 0">Your data is saved in this browser only. Keep a backup file so nothing is lost if browser data is cleared.</p>
+      <div class="row"><button type="button" class="btn sm primary" data-act="linkFile">${fileState==='ok'?'Change auto-backup file':'Turn on auto-backup to a file'}</button><button type="button" class="btn sm" data-act="exportJSON">Export backup</button><label class="btn sm" style="cursor:pointer">Import backup<input type="file" accept="application/json,.json" id="importFile" hidden></label></div>
+      <p class="small muted" style="margin:8px 0 0">${fileState==='ok'?'Auto-backup is on.':fileState==='reconnect'?'Auto-backup file needs reconnecting (browser asks after a restart).':'Auto-backup works in Chrome and Edge.'} ${s.lastBackup?`Last backup: ${new Date(s.lastBackup).toLocaleString('en-GB')}.`:''}</p>
+    </details>
+    <details class="more"><summary>Danger zone</summary><div class="row" style="margin-top:8px"><button type="button" class="btn sm danger" data-act="resetAll">Erase all data</button><span class="small muted">Export a backup first.</span></div></details>
+  `, d => {
+    Object.assign(S.settings, {examName:d.examName, examDate:d.examDate, dailyGoalMin:+d.dailyGoalMin||240, negMark:d.negMark===''?0.5:+d.negMark, theme:d.theme, notify:!!d.notify});
+    applyTheme();
+    if (d.notify && 'Notification' in window && Notification.permission === 'default') Notification.requestPermission().then(p => { if (p !== 'granted') toast('Notifications were not allowed — in-app reminders still work'); });
+  }, {ok:'Settings saved', mount: f => { f.querySelector('#importFile').addEventListener('change', ev => { const file = ev.target.files[0]; if (file) importJSON(file); }); }});
+}
+
+/* ----- flashcard quiz ----- */
+let quiz = null;
+function startQuiz(ids, label){
+  if (!ids.length) { toast('No flashcards yet — add some inside a topic'); return; }
+  quiz = {ids, i:0, show:false, right:0, wrong:0, label};
+  openDialog(`Flashcards · ${label}`, '<div id="quizBody"></div>', null, {});
+  renderQuiz();
+}
+function renderQuiz(){
+  const el = $('#quizBody'); if (!el || !quiz) return;
+  if (quiz.i >= quiz.ids.length) {
+    el.innerHTML = `<div class="qcard" style="text-align:center"><div class="q">Done! ${quiz.right} / ${quiz.ids.length} correct</div><div class="muted small">${quiz.wrong?'Missed cards come first next time.':'Perfect round.'}</div></div><div class="row" style="justify-content:flex-end;padding-bottom:6px"><button type="button" class="btn" data-act="closeDialog">Close</button>${quiz.wrong?'<button type="button" class="btn primary" data-act="quizRetry">Retry missed</button>':''}</div>`;
+    return;
+  }
+  const c = S.cards[quiz.ids[quiz.i]]; if (!c) { quiz.i++; renderQuiz(); return; }
+  el.innerHTML = `<div class="row prog"><span>${quiz.i+1} / ${quiz.ids.length}</span><span class="spacer"></span><span>${esc(topicName(c.topicId))}</span></div>
+    <div class="qcard"><div class="q">${esc(c.q)}</div>${quiz.show?`<div class="a">${esc(c.a)}</div>`:''}</div>
+    <div class="row" style="justify-content:flex-end;padding-bottom:6px">${quiz.show?`<button type="button" class="btn danger" data-act="quizMark" data-r="0">Missed <kbd>2</kbd></button><button type="button" class="btn ok" data-act="quizMark" data-r="1">Got it <kbd>1</kbd></button>`:`<button type="button" class="btn primary" data-act="quizShow" autofocus>Show answer <kbd>Space</kbd></button>`}</div>`;
+  el.querySelector('.btn.primary,.btn.ok')?.focus();
+}
+function practiceDlg(){
+  const subs = subjects().filter(s => arr('cards').some(c=>c.subjectId===s.id));
+  const cnt = arr('cards').length, due = dueTopics().filter(t=>arr('cards').some(c=>c.topicId===t.id));
+  if (!cnt) { toast('No flashcards yet — open a topic and add cards'); return; }
+  openDialog('Flashcard practice', `
+    ${fld('Which cards', `<select name="scope"><option value="all">All subjects (${cnt})</option>${due.length?`<option value="due">Topics due for revision (${due.length} topics)</option>`:''}${subs.map(s=>`<option value="${s.id}">${esc(s.name)} (${arr('cards').filter(c=>c.subjectId===s.id).length})</option>`).join('')}</select>`)}
+    ${fld('How many', `<select name="n"><option value="10">10 cards</option><option value="20" selected>20 cards</option><option value="50">50 cards</option><option value="9999">All</option></select>`, '', 'Cards you missed before, and cards not seen for longest, come first')}
+  `, d => {
+    const dueIds = new Set(due.map(t=>t.id));
+    let list = arr('cards').filter(c => d.scope==='all' ? true : d.scope==='due' ? dueIds.has(c.topicId) : c.subjectId===d.scope);
+    list = sortBy(list, c => ((c.wrong||0) - (c.right||0)) * -1000 + (c.last ? diff(c.last, today()) * -1 : -500)).slice(0, +d.n);
+    const lbl = d.scope==='all' ? 'All subjects' : d.scope==='due' ? 'Due topics' : subName(d.scope);
+    return () => startQuiz(list.map(c=>c.id), lbl);
+  }, {submit:'Start'});
+}
+
+/* ----- search ----- */
+function searchDlg(){
+  openDialog('Search', `<input class="inp" id="sq" placeholder="Topics, videos, mistakes, flashcards, plans…" autofocus><div class="sres" id="sres"></div>`, null, {mount: f => {
+    const q = f.querySelector('#sq'), out = f.querySelector('#sres'); let sel = 0, items = [];
+    const run = () => {
+      const s = q.value.trim().toLowerCase(); items = [];
+      if (s) {
+        arr('topics').forEach(t => { if ((t.name+' '+(t.note||'')+' '+(t.pyq||'')).toLowerCase().includes(s)) items.push({ty:'Topic', t:t.name, sub:subName(t.subjectId), act:'openTopic', id:t.id}); });
+        arr('videos').forEach(v => { if ((v.title+' '+(v.teacher||'')).toLowerCase().includes(s)) items.push({ty:'Video', t:v.title, sub:subName(v.subjectId), act: v.topicId?'openTopic':'openSubject', id: v.topicId || v.subjectId}); });
+        arr('mistakes').forEach(m => { if ((m.note||'').toLowerCase().includes(s)) items.push({ty:KIND[m.kind]||'Mistake', t:m.note, sub:subName(m.subjectId), act:'editMistake', id:m.id}); });
+        arr('cards').forEach(c => { if ((c.q+' '+c.a).toLowerCase().includes(s)) items.push({ty:'Flashcard', t:c.q, sub:c.a, act:'openTopic', id:c.topicId}); });
+        arr('plans').forEach(p => { const nm = topicName(p.topicId)||p.title||''; if ((nm+' '+(p.source||'')).toLowerCase().includes(s)) items.push({ty:'Plan · '+fmtD(p.date), t:nm||subName(p.subjectId), sub:p.source||'', act:'editPlan', id:p.id}); });
+        subjects().forEach(x => { if (x.name.toLowerCase().includes(s)) items.push({ty:'Subject', t:x.name, sub:`${x.marks} marks`, act:'openSubject', id:x.id}); });
+      }
+      items = items.slice(0, 40); sel = 0;
+      out.innerHTML = s ? (items.length ? items.map((it,i)=>`<button type="button" class="${i===0?'sel':''}" data-act="${it.act}" data-id="${it.id}"><span class="ty">${esc(it.ty)}</span><span>${esc(it.t)}</span><span class="small muted">${esc(it.sub)}</span></button>`).join('') : '<div class="empty">No matches</div>') : '<div class="small muted" style="padding:8px">Type to search. <kbd>↑</kbd><kbd>↓</kbd> to move, <kbd>Enter</kbd> to open.</div>';
+    };
+    q.addEventListener('input', run);
+    q.addEventListener('keydown', e => {
+      const bs = out.querySelectorAll('button');
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!bs.length) return; bs[sel]?.classList.remove('sel'); sel = (sel + (e.key==='ArrowDown'?1:-1) + bs.length) % bs.length; bs[sel].classList.add('sel'); bs[sel].scrollIntoView({block:'nearest'}); }
+      if (e.key === 'Enter') { e.preventDefault(); bs[sel]?.click(); }
+    });
+    run();
+  }});
+}
+function shortcutsDlg(){
+  openDialog('Keyboard shortcuts', `<div class="shortcuts">
+    <span><kbd>1</kbd>–<kbd>5</kbd></span><span>Switch view: Today, Subjects, Revision, Planner, Analysis</span>
+    <span><kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd></span><span>Search everything</span>
+    <span><kbd>S</kbd></span><span>Start a study timer (or stop the running one)</span>
+    <span><kbd>P</kbd></span><span>New plan</span>
+    <span><kbd>T</kbd></span><span>New topic</span>
+    <span><kbd>L</kbd></span><span>Log study time</span>
+    <span><kbd>M</kbd></span><span>Log a mistake</span>
+    <span><kbd>F</kbd></span><span>Flashcard practice</span>
+    <span><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span><span>Save the open form</span>
+    <span><kbd>Esc</kbd></span><span>Close</span>
+  </div>`, null);
+}
+
+/* ================= actions ================= */
+function setStatus(t, s){
+  t.status = s; let msg = null;
+  if (s === 'done' && !t.nextRev) { t.studiedAt = today(); t.revStage = 0; t.nextRev = addDays(today(), INT[0]); msg = 'Nice! First revision is tomorrow'; }
+  if (s !== 'done' && t.nextRev && !(t.revLog||[]).length) { t.nextRev = null; t.studiedAt = null; }
+  commit(msg);
+}
+function revise(t, g){
+  const stage = t.revStage || 0;
+  const ns = g === 'good' ? Math.min(stage+1, INT.length-1) : Math.max(0, stage-1);
+  t.revStage = ns; t.nextRev = addDays(today(), INT[ns]); t.revLog = [...(t.revLog||[]), {d:today(), r:g}]; t.status = 'done'; t.studiedAt = t.studiedAt || today();
+  commit(`Next revision: ${fmtD(t.nextRev)}`);
+}
+function arm(el, label){ if (el.dataset.armed) return true; el.dataset.armed = '1'; const old = el.textContent; el.textContent = label || 'Sure? Click again'; setTimeout(()=>{ if (el.isConnected) { delete el.dataset.armed; el.textContent = old; } }, 3500); return false; }
+const A = {
+  go: el => { ui.view = el.dataset.v; if (ui.view !== 'subjects') ui.subjectId = null; try { localStorage.setItem(KEY+':view', ui.view); } catch(e){} closeDetail(); closeDialog(); scrollTo(0,0); render(); },
+  openSubject: el => { closeDialog(); closeDetail(); ui.view = 'subjects'; ui.subjectId = el.dataset.id; ui.filter = 'all'; scrollTo(0,0); render(); },
+  backSubjects: () => { ui.subjectId = null; render(); },
+  filter: el => { ui.filter = el.dataset.f; render(); },
+  togglePast: () => { ui.showPast = !ui.showPast; render(); },
+  openTopic: el => openTopic(el.dataset.id),
+  closeDetail: () => closeDetail(),
+  closeDialog: () => { closeDialog(); quiz = null; },
+  addSubject: () => dlgSubject(),
+  editSubject: el => dlgSubject(S.subjects[el.dataset.id]),
+  addTopic: el => dlgTopic(null, el.dataset.sid || ui.subjectId),
+  editTopic: el => dlgTopic(S.topics[el.dataset.id]),
+  bulkTopics: el => dlgBulk(el.dataset.sid),
+  addVideo: el => dlgVideo(null, el.dataset.sid, el.dataset.tid),
+  editVideo: el => dlgVideo(S.videos[el.dataset.id]),
+  logVideo: el => { const v = S.videos[el.dataset.id]; dlgSession(null, {sid:v.subjectId, tid:v.topicId, vid:v.id, kind:'video'}); },
+  startVideo: el => { const v = S.videos[el.dataset.id]; startTimer({kind:'video', subjectId:v.subjectId, topicId:v.topicId, videoId:v.id}); if (v.url) window.open(v.url, '_blank', 'noopener'); },
+  logSession: el => dlgSession(null, {sid:el.dataset.sid, tid:el.dataset.tid}),
+  editSession: el => dlgSession(S.sessions[el.dataset.id]),
+  startDlg: el => dlgStart({sid:el.dataset.sid, tid:el.dataset.tid}),
+  startPlan: el => { const p = S.plans[el.dataset.id]; startTimer({kind:'reading', subjectId:p.subjectId, topicId:p.topicId, pomo:null}); },
+  stopTimer: () => stopTimer(),
+  discardTimer: el => { if (!arm(el, 'Discard?')) return; S.timer = null; commit('Timer discarded'); },
+  addPlan: el => dlgPlan(null, el.dataset.date, el.dataset.sid, el.dataset.tid),
+  editPlan: el => dlgPlan(S.plans[el.dataset.id]),
+  bulkPlan: () => dlgBulkPlan(),
+  togglePlan: el => { const p = S.plans[el.dataset.id]; p.done = !p.done; commit(p.done ? 'Done' : null); },
+  moveToday: el => { S.plans[el.dataset.id].date = today(); commit('Moved to today'); },
+  moveAllMissed: () => { const m = missedPlans(); m.forEach(p => p.date = today()); commit(`${m.length} moved to today`); },
+  addExam: () => dlgExam(),
+  editExam: el => dlgExam(S.exams[el.dataset.id]),
+  addMistake: el => dlgMistake(null, {examId:el.dataset.exam, sid:el.dataset.sid || ui.subjectId, tid:el.dataset.tid}),
+  editMistake: el => dlgMistake(S.mistakes[el.dataset.id]),
+  toggleMistake: el => { const m = S.mistakes[el.dataset.id]; m.resolved = !m.resolved; commit(m.resolved ? 'Marked as fixed' : null); },
+  addCard: el => dlgCard(null, el.dataset.tid),
+  editCard: el => dlgCard(S.cards[el.dataset.id]),
+  bulkCards: el => dlgBulkCards(el.dataset.tid),
+  quizTopic: el => { const t = S.topics[el.dataset.id]; startQuiz(sortBy(arr('cards').filter(c=>c.topicId===t.id), c=>(c.right||0)-(c.wrong||0)).map(c=>c.id), t.name); },
+  practice: () => practiceDlg(),
+  quizShow: () => { quiz.show = true; renderQuiz(); },
+  quizMark: el => { const c = S.cards[quiz.ids[quiz.i]]; const ok = el.dataset.r === '1'; if (c) { if (ok) c.right = (c.right||0)+1; else { c.wrong = (c.wrong||0)+1; (quiz.missed = quiz.missed||[]).push(c.id); } c.last = today(); } ok ? quiz.right++ : quiz.wrong++; quiz.i++; quiz.show = false; persist(); render(); renderQuiz(); },
+  quizRetry: () => { const ids = quiz.missed || []; quiz = {ids, i:0, show:false, right:0, wrong:0, label:quiz.label}; renderQuiz(); },
+  setStatus: el => setStatus(S.topics[el.dataset.id], el.dataset.s),
+  revise: el => revise(S.topics[el.dataset.id], el.dataset.g),
+  snooze: el => { const t = S.topics[el.dataset.id]; t.nextRev = addDays(t.nextRev < today() ? today() : t.nextRev, 1); commit(`Moved to ${fmtD(t.nextRev)}`); },
+  settings: () => dlgSettings(),
+  search: () => searchDlg(),
+  linkFile: () => linkFile(),
+  reconnectFile: () => reconnectFile(),
+  exportJSON: () => exportJSON(),
+  resetAll: el => { if (!arm(el, 'Erase everything? Click again')) return; S = blank(); seedSubjectsOnly(); closeDialog(); closeDetail(); commit('All data erased'); },
+  clearSamples: el => { if (!arm(el)) return; MAPS.forEach(m => Object.values(S[m]).forEach(o => { if (o.sample) delete S[m][o.id]; })); commit('Sample data cleared'); },
+  del: el => {
+    if (!arm(el)) return;
+    const col = el.dataset.col, id = el.dataset.id;
+    delete S[col][id];
+    if (col === 'topics') { arr('cards').forEach(c => { if (c.topicId === id) delete S.cards[c.id]; }); if (ui.detail === id) closeDetail(); }
+    if (col === 'subjects' && ui.subjectId === id) ui.subjectId = null;
+    closeDialog(); commit('Deleted');
+  }
+};
+function seedSubjectsOnly(){ const s = seed(); S.subjects = s.subjects; }
+
+/* ================= events ================= */
+document.addEventListener('click', e => {
+  if (e.target.closest('a[href]')) return;
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = A[el.dataset.act]; if (!fn) return;
+  e.preventDefault(); fn(el);
+});
+document.addEventListener('keydown', e => {
+  const dlgOpen = !$('#dialogLayer').hidden;
+  if (e.key === 'Escape') { if (dlgOpen) { closeDialog(); quiz = null; } else if (ui.detail) closeDetail(); return; }
+  if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); searchDlg(); return; }
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName);
+  if (dlgOpen && quiz && !typing) {
+    if (e.key === ' ' && !quiz.show && quiz.i < quiz.ids.length) { e.preventDefault(); A.quizShow(); }
+    else if (quiz.show && (e.key === '1' || e.key === '2')) { e.preventDefault(); A.quizMark({dataset:{r: e.key==='1'?'1':'0'}}); }
+    return;
+  }
+  if (typing || dlgOpen || e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (/^[1-5]$/.test(k)) { A.go({dataset:{v:VIEWS[+k-1][0]}}); }
+  else if (k === '/') { e.preventDefault(); searchDlg(); }
+  else if (k === 's') { S.timer ? stopTimer() : dlgStart({}); }
+  else if (k === 'p') dlgPlan(null, today());
+  else if (k === 't') dlgTopic(null, ui.subjectId);
+  else if (k === 'l') dlgSession(null, {});
+  else if (k === 'm') dlgMistake(null, {sid:ui.subjectId});
+  else if (k === 'f') practiceDlg();
+  else if (k === '?') shortcutsDlg();
+});
+addEventListener('hashchange', () => { const v = location.hash.slice(1); if (VIEWS.some(x=>x[0]===v)) A.go({dataset:{v}}); });
+addEventListener('scroll', () => $('#topbar').classList.toggle('scrolled', scrollY > 4), {passive:true});
+addEventListener('storage', e => { if (e.key === KEY) { const o = load(); if (o) { S = o; render(); } } });
+let tt = 0;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(()=>{ t.hidden = true; }, 3000); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { render(); checkReminders(); } });
+let lastDay = today();
+setInterval(() => { checkReminders(); if (today() !== lastDay) { lastDay = today(); render(); } }, 30000);
+
+applyTheme();
+render();
+initFile();
+setTimeout(checkReminders, 1500);
+if (firstRun) setTimeout(() => toast('Welcome! Sample data is loaded so you can explore — press ? for shortcuts'), 600);
+})();
+</script>
+
+<div id="updateBar" hidden style="position:fixed;right:20px;bottom:20px;z-index:70;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;font-size:.9rem">
+  <span>A new version of BCS Prep Desk is ready.</span><button class="btn sm primary" id="updateBtn">Update now</button>
+</div>
+<script>
+/* PWA: offline support, install button, update prompt */
+(() => {
+  if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+  let deferred = null;
+  const ib = document.getElementById('installBtn');
+  addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; ib.hidden = false; });
+  ib.addEventListener('click', async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; ib.hidden = true; });
+  addEventListener('appinstalled', () => { ib.hidden = true; });
+  addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      const offer = w => { const bar = document.getElementById('updateBar'); bar.hidden = false; document.getElementById('updateBtn').onclick = () => w.postMessage('skipWaiting'); };
+      if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
+      reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) offer(w); }); });
+      setInterval(() => reg.update().catch(()=>{}), 60*60*1000);
+    }).catch(err => console.warn('Service worker not registered', err));
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!reloaded) { reloaded = true; location.reload(); } });
+  });
+})();
+</script>
+</body>
+</html>
